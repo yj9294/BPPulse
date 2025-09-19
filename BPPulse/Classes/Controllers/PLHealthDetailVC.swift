@@ -24,6 +24,7 @@ class PLHealthDetailVC: PLBaseVC {
 
     private func setupUI(with item: PLHealthModel) {
         self.title = item.value
+        view.subviews.forEach({$0.removeFromSuperview()})
         
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
@@ -172,6 +173,15 @@ class PLHealthDetailVC: PLBaseVC {
                 make.bottom.equalToSuperview().offset(-10)
             }
             
+            let button = UIButton(type: .custom)
+            button.backgroundColor = .clear
+            button.addTarget(self, action: #selector(suggestionButtonTapped(_:)), for: .touchUpInside)
+            button.tag = model.hashValue
+            container.addSubview(button)
+            button.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
             bottomStack.addArrangedSubview(container)
         }
     }
@@ -180,5 +190,14 @@ class PLHealthDetailVC: PLBaseVC {
         guard let label = gesture.view as? UILabel else { return }
         guard let url = URL(string: label.text) else { return }
         UIApplication.shared.open(url)
+    }
+    
+    @objc private func suggestionButtonTapped(_ sender: UIButton) {
+        for model in PLHealthModel.allCases {
+            if model.hashValue == sender.tag {
+                self.item = model
+                break
+            }
+        }
     }
 }
