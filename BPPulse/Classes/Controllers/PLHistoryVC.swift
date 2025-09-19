@@ -41,7 +41,6 @@ class PLHistoryVC: PLBaseVC, UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         setupNavigationBar()
         let models = CacheUtil.shared.getPulseList()
         datasource = models.reduce(into: [[PLPulseModel]]()) { result, model in
@@ -59,6 +58,7 @@ class PLHistoryVC: PLBaseVC, UICollectionViewDataSource, UICollectionViewDelegat
         } else {
             self.emptryView.isHidden = true
         }
+        super.viewWillAppear(animated)
     }
     
     func setupNavigationBar() {

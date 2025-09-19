@@ -20,14 +20,14 @@ class PushUtil: NSObject {
         super.init()
     }
 
-    func registerRemoteNotification(completion: (()->Void)? = nil) {
+    func registerRemoteNotification(completion: ((Bool)->Void)? = nil) {
         let center = UNUserNotificationCenter.current()
         center.delegate = self
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { (_, error) in
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { (ret, error) in
             if let error = error {
                 print(error)
             } else {
-                completion?()
+                completion?(ret)
             }
         }
         UIApplication.shared.registerForRemoteNotifications()

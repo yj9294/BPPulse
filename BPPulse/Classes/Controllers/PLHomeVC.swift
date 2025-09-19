@@ -143,9 +143,12 @@ class PLHomeVC: PLBaseVC {
                     }
                     let login = AEAction(buttonColor: .primary_1, title: "YES") {
                         if settings.authorizationStatus == .notDetermined {
-                            PushUtil.shared.registerRemoteNotification {
+                            PushUtil.shared.registerRemoteNotification { ret in
                                 DispatchQueue.main.async {
-                                    self.navigationItem.rightBarButtonItem?.tintColor = .primary_1
+                                    self.navigationItem.rightBarButtonItem?.tintColor = ret ? .primary_1 : .text_4
+                                    if ret {
+                                        self.addNotification()
+                                    }
                                 }
                             }
                         } else {
@@ -163,7 +166,62 @@ class PLHomeVC: PLBaseVC {
     }
     
     @objc func notiAction() {
-        
+        let center = UNUserNotificationCenter.current()
+        center.getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .authorized:
+                    let ok = AEAction(title: "OK") {}
+                    AEAlertControl.alert(
+                        title: "Notifications Enabled",
+                        content: "You will receive reminders at 8 AM and 8 PM to measure your blood pressure.",
+                        actions: [ok]
+                    )
+                default:
+                    let cancel = AEAction(title: "Cancel") {}
+                    let openSettings = AEAction(buttonColor: .primary_1, title: "Open Settings") {
+                        if let url = URL(string: UIApplication.openSettingsURLString),
+                           UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
+                    AEAlertControl.alert(
+                        title: "Enable Notifications?",
+                        content: "Notifications are currently off. Turn them on in Settings to receive reminders.",
+                        actions: [cancel, openSettings]
+                    )
+                }
+            }
+        }
+    }
+    
+    @objc func addNotification() {
+        let center = UNUserNotificationCenter.current()
+
+        // Morning notification at 8:00 AM
+        var morningDate = DateComponents()
+        morningDate.hour = 8
+        morningDate.minute = 0
+        let morningContent = UNMutableNotificationContent()
+        morningContent.title = "Morning Reminder"
+        morningContent.body = "Time to record your morning pulse!"
+        morningContent.sound = .default
+        let morningTrigger = UNCalendarNotificationTrigger(dateMatching: morningDate, repeats: true)
+        let morningRequest = UNNotificationRequest(identifier: "morning_8am", content: morningContent, trigger: morningTrigger)
+
+        // Evening notification at 8:00 PM
+        var eveningDate = DateComponents()
+        eveningDate.hour = 20
+        eveningDate.minute = 0
+        let eveningContent = UNMutableNotificationContent()
+        eveningContent.title = "Evening Reminder"
+        eveningContent.body = "Don't forget to record your evening pulse!"
+        eveningContent.sound = .default
+        let eveningTrigger = UNCalendarNotificationTrigger(dateMatching: eveningDate, repeats: true)
+        let eveningRequest = UNNotificationRequest(identifier: "evening_8pm", content: eveningContent, trigger: eveningTrigger)
+
+        center.add(morningRequest, withCompletionHandler: nil)
+        center.add(eveningRequest, withCompletionHandler: nil)
     }
 
     func moreAction() {
