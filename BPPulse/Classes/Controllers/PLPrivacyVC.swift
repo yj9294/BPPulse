@@ -110,6 +110,6 @@ class PLPrivacyVC: PLBaseVC {
         // 7. Contact Us
         stackView.addArrangedSubview(createSectionTitle("7. Contact Us"))
         stackView.addArrangedSubview(createContentLabel("If you have any questions or concerns regarding this Privacy Policy, please contact us. Thank you for choosing BP Pulse, we will be happy to provide you with better service."))
-        stackView.addArrangedSubview(createContentLabel("Email: support@bppulse.com"))
+        stackView.addArrangedSubview(createContentLabel("Email: nicoyang.mason@gmail.com"))
     }
 }
