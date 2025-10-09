@@ -40,6 +40,9 @@ class PLHomeContentView: PLBaseView {
     lazy var stateView = {
         let stateView = PLStatusView()
         stateView.layerCornerRadius = 8
+        stateView.handle = { [weak self] in
+            self?.goIntroduce()
+        }
         return stateView
     }()
     
@@ -149,6 +152,14 @@ class PLHomeContentView: PLBaseView {
         timeLabel.snp.makeConstraints { make in
             make.centerY.equalTo(sceneView)
             make.left.equalTo(sceneView.snp.right).offset(16)
+        }
+    }
+    
+    func goIntroduce() {
+        if let url = URL(string: AppUtil.shared.introduceURL) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
 }

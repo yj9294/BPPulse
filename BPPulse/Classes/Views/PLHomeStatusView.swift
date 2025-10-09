@@ -16,6 +16,7 @@ class PLHomeStatusView: PLBaseView {
             titleLabel.text = status.title
             rangeLabel.text = status.reason
             detailLabel.text = status.description
+            questionView.tintColor = status.color
         }
     }
     
@@ -24,6 +25,13 @@ class PLHomeStatusView: PLBaseView {
         label.textColor = .text_1
         label.font = .fontWithSize(size: 14, weigth: .medium)
         return label
+    }()
+    
+    lazy var questionView = {
+        let view = UIImageView(image: UIImage(named: "status_q")?.withRenderingMode(.alwaysTemplate))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goIntroduce)))
+        view.isUserInteractionEnabled = true
+        return view
     }()
     
     lazy var rangeLabel = {
@@ -58,7 +66,13 @@ class PLHomeStatusView: PLBaseView {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16 * scale)
             make.left.equalTo(icon.snp.right).offset(16)
-            make.right.equalToSuperview().offset(-16)
+        }
+        
+        addSubview(questionView)
+        questionView.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
+            make.left.equalTo(titleLabel.snp.right).offset(4)
+            make.width.height.equalTo(16)
         }
         
         addSubview(rangeLabel)
@@ -82,4 +96,12 @@ class PLHomeStatusView: PLBaseView {
         
     }
 
+    
+    @objc func goIntroduce() {
+        if let url = URL(string: AppUtil.shared.introduceURL) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+    }
 }

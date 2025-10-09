@@ -41,7 +41,7 @@ class PLHomeVC: PLBaseVC {
     
     func setupNavigationBar() {
         // 创建一个按钮
-        let leftItem = UIBarButtonItem(title: "BP Pulse", style: .plain, target: self, action: nil)
+        let leftItem = UIBarButtonItem(title: "PressureTrack", style: .plain, target: self, action: nil)
 
         // 设置字体和颜色
         let attributes: [NSAttributedString.Key: Any] = [
@@ -62,13 +62,30 @@ class PLHomeVC: PLBaseVC {
     override func setupUI() {
         super.setupUI()
         
-        view.addSubview(segementView)
+        // 1. 新增 scrollView 和 contentViewContainer
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        let contentViewContainer = UIView()
+        scrollView.addSubview(contentViewContainer)
+        contentViewContainer.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView.snp.width)
+        }
+        
+        // 2. 将其他子视图添加到 contentViewContainer
+        contentViewContainer.addSubview(segementView)
         segementView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.topMargin)
+            make.top.equalTo(contentViewContainer.snp.top)
             make.left.right.equalToSuperview().inset(16)
         }
         
-        view.addSubview(contentView)
+        contentViewContainer.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.top.equalTo(segementView.snp.bottom).offset(16 * scale)
             make.left.right.equalToSuperview().inset(16)
@@ -78,7 +95,7 @@ class PLHomeVC: PLBaseVC {
         recentTitleLabel.text = "Recent Trends"
         recentTitleLabel.textColor = .black
         recentTitleLabel.font = .fontWithSize(size: 18  , weigth: .medium)
-        view.addSubview(recentTitleLabel)
+        contentViewContainer.addSubview(recentTitleLabel)
         recentTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.bottom).offset(24 * scale)
             make.left.equalToSuperview().offset(16)
@@ -91,7 +108,7 @@ class PLHomeVC: PLBaseVC {
         moreButton.addAction { [weak self] in
             self?.moreAction()
         }
-        view.addSubview(moreButton)
+        contentViewContainer.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.centerY.equalTo(recentTitleLabel)
             make.right.equalToSuperview().offset(-16)
@@ -100,18 +117,20 @@ class PLHomeVC: PLBaseVC {
         let centerView = UIImageView(image: UIImage(named: "home_center"))
         centerView.contentMode = .scaleAspectFill
         centerView.layerCornerRadius = 16
-        view.addSubview(centerView)
+        contentViewContainer.addSubview(centerView)
         centerView.snp.makeConstraints { make in
             make.top.equalTo(moreButton.snp.bottom).offset(16 * scale)
             make.left.right.equalToSuperview().inset(16)
         }
         
-        view.addSubview(statusView)
+        contentViewContainer.addSubview(statusView)
         statusView.snp.makeConstraints { make in
             make.top.equalTo(centerView.snp.bottom).offset(24 * scale)
             make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().offset(-16)
         }
         
+        // 3. addButton 仍然直接加到 view
         let addButton = UIButton()
         addButton.setImage(UIImage(named: "home_add"), for: .normal)
         addButton.addAction { [weak self] in

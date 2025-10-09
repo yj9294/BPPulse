@@ -46,7 +46,7 @@ class PLAboutUsVC: PLBaseVC {
 
         // App Name
         let appNameLabel = UILabel()
-        appNameLabel.text = "BP Pulse"
+        appNameLabel.text = "PressureTrack"
         appNameLabel.font = .fontWithSize(size: 20, weigth: .medium)
         appNameLabel.textColor = .primary_1
         appNameLabel.textAlignment = .center

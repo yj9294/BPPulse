@@ -105,11 +105,11 @@ class PLPrivacyVC: PLBaseVC {
         
         // 6. Privacy Policy Updates
         stackView.addArrangedSubview(createSectionTitle("6. Privacy Policy Updates"))
-        stackView.addArrangedSubview(createContentLabel("We reserve the right to amend or update this Privacy policy at any time. Any material changes will be made through in-app notifications or by posting an updated Privacy Policy on our website to keep users informed of changes. By using BP Pulse, you agree to the terms of this Privacy Policy. If you do not agree to these terms, please stop using our app."))
+        stackView.addArrangedSubview(createContentLabel("We reserve the right to amend or update this Privacy policy at any time. Any material changes will be made through in-app notifications or by posting an updated Privacy Policy on our website to keep users informed of changes. By using PressureTrack, you agree to the terms of this Privacy Policy. If you do not agree to these terms, please stop using our app."))
         
         // 7. Contact Us
         stackView.addArrangedSubview(createSectionTitle("7. Contact Us"))
-        stackView.addArrangedSubview(createContentLabel("If you have any questions or concerns regarding this Privacy Policy, please contact us. Thank you for choosing BP Pulse, we will be happy to provide you with better service."))
+        stackView.addArrangedSubview(createContentLabel("If you have any questions or concerns regarding this Privacy Policy, please contact us. Thank you for choosing PressureTrack, we will be happy to provide you with better service."))
         stackView.addArrangedSubview(createContentLabel("Email: nicoyang.mason@gmail.com"))
     }
 }

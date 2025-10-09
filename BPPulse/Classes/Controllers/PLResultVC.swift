@@ -185,6 +185,7 @@ class PLResultCardView: PLBaseView {
             statusView.backgroundColor = item.status.bgColor
             statusLabel.text = item.status.title
             statusLabel.textColor = item.status.color
+            questionView.tintColor = item.status.color
         }
     }
     private let containerView: UIView = {
@@ -254,6 +255,11 @@ class PLResultCardView: PLBaseView {
         let label = UILabel()
         label.font = .fontWithSize(size: 12)
         return label
+    }()
+    
+    private lazy var questionView = {
+        let view = UIImageView(image: UIImage(named: "status_q")?.withRenderingMode(.alwaysOriginal))
+        return view
     }()
     
     override func setupUI() {
@@ -347,7 +353,33 @@ class PLResultCardView: PLBaseView {
         statusView.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(4 * scale)
-            make.left.right.equalToSuperview().inset(8)
+            make.left.equalToSuperview().offset(8)
+        }
+        
+        statusView.addSubview(questionView)
+        questionView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(statusLabel.snp.right).offset(4)
+            make.width.height.equalTo(16)
+            make.right.equalToSuperview().offset(-8)
+        }
+        
+        let button = UIButton()
+        statusView.addSubview(button)
+        button.addAction { [weak self] in
+            self?.goIntroduce()
+        }
+        statusView.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    func goIntroduce() {
+        if let url = URL(string: AppUtil.shared.introduceURL) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
 }

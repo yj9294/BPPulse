@@ -63,7 +63,7 @@ class PLHistoryVC: PLBaseVC, UICollectionViewDataSource, UICollectionViewDelegat
     
     func setupNavigationBar() {
         // 创建一个按钮
-        let leftItem = UIBarButtonItem(title: "BP Pulse", style: .plain, target: self, action: nil)
+        let leftItem = UIBarButtonItem(title: "PressureTrack", style: .plain, target: self, action: nil)
         
         // 设置字体和颜色
         let attributes: [NSAttributedString.Key: Any] = [
@@ -212,6 +212,9 @@ class PLHistoryCell: PLBaseCollectionCell {
     lazy var stateView = {
         let stateView = PLStatusView()
         stateView.layerCornerRadius = 8
+        stateView.handle = { [weak self] in
+            self?.goIntroduce()
+        }
         return stateView
     }()
     
@@ -306,5 +309,13 @@ class PLHistoryCell: PLBaseCollectionCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func goIntroduce() {
+        if let url = URL(string: AppUtil.shared.introduceURL) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
 }

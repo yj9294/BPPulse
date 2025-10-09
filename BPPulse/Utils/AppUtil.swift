@@ -32,6 +32,8 @@ class AppUtil: NSObject {
     /// 应用小版本
     var appBuild: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "1"
 
+    
+    let introduceURL: String = "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings"
     /// 触控反馈
     static func feedbackGenerator(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
