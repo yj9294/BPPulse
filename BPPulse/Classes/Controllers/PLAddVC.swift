@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 import IQKeyboardManagerSwift
 
 class PLAddVC: PLBaseVC {
@@ -22,6 +23,12 @@ class PLAddVC: PLBaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    var timer: Timer?
+    
+    deinit {
+        timer?.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -226,10 +233,43 @@ class PLAddVC: PLBaseVC {
     
     func nextAction() {
         CacheUtil.shared.cachePulse(self.item)
-        if self.title ==  "Update" {
-            self.back()
-            return
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.label.text = "Loading..."
+        GADUtil.share.load(GADPositionExt.recordInter)
+        
+        let maxDuration = 10.0
+        var progres = 0.0
+        if self.timer != nil {
+            self.timer?.invalidate()
+            self.timer = nil
         }
+        var showAD = false
+        self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
+            guard let self = self else {
+                timer.invalidate()
+                hud.hide(animated: true)
+                return
+            }
+            progres += 0.1
+            if progres > maxDuration {
+                hud.hide(animated: true)
+                goResultVC()
+                timer.invalidate()
+                return
+            }
+            if GADUtil.share.isLoaded(GADPositionExt.recordInter), !showAD {
+                hud.hide(animated: true)
+                showAD = true
+                GADUtil.share.show(GADPositionExt.recordInter) { _ in
+                    self.goResultVC()
+                    timer.invalidate()
+                }
+                return
+            }
+        }
+    }
+    
+    func goResultVC() {
         let vc = PLResultVC()
         vc.item = item
         navigationController?.pushViewController(vc, animated: true)

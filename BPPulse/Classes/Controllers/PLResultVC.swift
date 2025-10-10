@@ -9,6 +9,15 @@ import UIKit
 
 class PLResultVC: PLBaseVC {
     
+    private var willAppear = false
+    private var impressDate = Date().addingTimeInterval(-11)
+    private lazy var adView: GADNativeView = {
+        let adView = GADNativeView(.big)
+        adView.layer.cornerRadius = 8
+        adView.layer.masksToBounds = true
+        return adView
+    }()
+    
     var item: PLPulseModel = .init() {
         didSet {
             cardView.item = item
@@ -18,6 +27,19 @@ class PLResultVC: PLBaseVC {
     var datasource: [PLHealthModel] = [.heart, .eat, .exercise, .protect]
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(nativeADLoad), name: .nativeUpdate, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        willAppear = true
+        GADUtil.share.load(GADPositionExt.homeNative)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        willAppear = false
+        GADUtil.share.disappear(GADPositionExt.homeNative)
     }
 
     override func back() {
@@ -102,6 +124,13 @@ class PLResultVC: PLBaseVC {
             make.height.equalTo(55 * scale * 2 + 16)
         }
         
+        view.addSubview(adView)
+        adView.snp.remakeConstraints { make in
+            make.top.equalTo(healthCollectionView.snp.bottom).offset(16 * scale)
+            make.left.right.equalToSuperview().inset(16)
+            make.height.equalTo(0).priority(.high)
+        }
+        
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
@@ -168,6 +197,38 @@ class PLResultHealthCell: PLBaseCollectionCell {
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(icon.snp.right).offset(8)
+        }
+    }
+}
+
+extension PLResultVC {
+    @objc func nativeADLoad(noti: Notification) {
+        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.homeNative.rawValue {
+            if let ad = noti.object as? GADNativeModel {
+                if willAppear {
+                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
+                        adView.nativeAd = ad.nativeAd
+                        impressDate = Date()
+                        if adView.superview != nil {
+                            adView.snp.remakeConstraints { make in
+                                make.top.equalTo(healthCollectionView.snp.bottom).offset(16 * scale)
+                                make.left.right.equalToSuperview().inset(16)
+                                make.height.equalTo(180).priority(.high)
+                            }
+                        }
+                        return
+                    } else {
+                        NSLog("[ad] (\(position)) 10显示间隔 ")
+                    }
+                }
+            }
+            adView.nativeAd = nil
+            view.addSubview(adView)
+            adView.snp.remakeConstraints { make in
+                make.top.equalTo(healthCollectionView.snp.bottom).offset(16 * scale)
+                make.left.right.equalToSuperview().inset(16)
+                make.height.equalTo(0).priority(.high)
+            }
         }
     }
 }
@@ -382,4 +443,5 @@ class PLResultCardView: PLBaseView {
             }
         }
     }
+    
 }

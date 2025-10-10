@@ -49,6 +49,16 @@ class CacheUtil: NSObject {
             _pulseList.insert(pulse, at: 0)
         }
     }
+    
+    /// 获取网络是否可用
+    @CodableUserDefaults(key: "com.network.enable", defaultValue: false)
+    private var isNetworkEnable: Bool
+    func getNetworkEnable() -> Bool {
+        return isNetworkEnable
+    }
+    func updateNetworkEnable(_ enable: Bool) {
+        isNetworkEnable = enable
+    }
 }
 
 

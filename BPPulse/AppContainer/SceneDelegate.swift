@@ -6,9 +6,21 @@
 //
 
 import UIKit
+import Firebase
+import MobileCoreServices
+import AppTrackingTransparency
+import Network
+import FacebookCore
+import GoogleMobileAds
+import AppLovinSDK
+import VungleAdsSDK
+import FBAEMKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
+    @CodableUserDefaults(key: "ad.price", defaultValue: 0)
+    var price: Double
+    
     var window: UIWindow?
     var tabbarVC: PLTabbarVC = PLTabbarVC()
 
@@ -21,6 +33,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /// 设置全局代理 用于查找vc
         ScreenUtil.sceneDelegate = self
         
+        MobileAds.shared.requestConfiguration.testDeviceIdentifiers = [ "d547a03032c9508d3f926616d93cfa5b", "bda4937be36282e4dcfd7f6bcfefbdb8" ]
+        GADUtil.initializePositions(GADPositionExt.allCases)
+        requestGADConfig()
+        checkNetwork()
+        NotificationCenter.default.addObserver(self, selector: #selector(paidCallback(noti:)), name: .adPaid, object: nil)
+        guard let url = connectionOptions.urlContexts.first?.url else {
+            return
+        }
+
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -61,5 +89,95 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = PLLaunchVC()
     }
 
+    func checkNetwork() {
+        let monitor = NWPathMonitor()
+        monitor.pathUpdateHandler = { path in
+            DispatchQueue.main.async {
+                if path.status == .satisfied, !CacheUtil.shared.getNetworkEnable() {
+                    self.requestGADConfig()
+                    self.requestTrackingAuthorization()
+                } else {
+                    debugPrint("网络已断开")
+                }
+            }
+        }
+
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
+    }
+    
+    func requestGADConfig() {
+        GADUtil.share.requestConfig()
+        GADPositionExt.allCases.forEach({
+            GADUtil.share.load($0)
+        })
+    }
+    
+    func adConfig() {
+        // Create the initialization configuration
+        ALPrivacySettings.setHasUserConsent(true)
+        ALPrivacySettings.setDoNotSell(true)
+
+        // Liftoff
+        VunglePrivacySettings.setGDPRStatus(true)
+        VunglePrivacySettings.setGDPRMessageVersion("v1.0.0")
+        VunglePrivacySettings.setCCPAStatus(true)
+
+        // Meta
+        if ATTrackingManager.trackingAuthorizationStatus == .authorized {
+            Settings.shared.isAdvertiserTrackingEnabled = true
+        } else {
+            Settings.shared.isAdvertiserTrackingEnabled = false
+        }
+
+        // Mintegral
+//        MTGSDK.sharedInstance().consentStatus = true
+//        MTGSDK.sharedInstance().doNotTrackStatus = false
+
+        // Pangle 不需要设置
+
+        // Unity
+//        let gdprMetaData = UADSMetaData()
+//        gdprMetaData.set("gdpr.consent", value: true)
+//        gdprMetaData.commit()
+
+//        let ccpaMetaData = UADSMetaData()
+//        ccpaMetaData.set("privacy.consent", value: true)
+//        ccpaMetaData.commit()
+
+    }
+    
+    func requestTrackingAuthorization() {
+        let status = ATTrackingManager.trackingAuthorizationStatus
+        switch status {
+        case .notDetermined:
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                ATTrackingManager.requestTrackingAuthorization { results in
+                    switch results {
+                    case .authorized:
+                        Settings.shared.isAdvertiserTrackingEnabled = true
+                        Settings.shared.isAutoLogAppEventsEnabled = true
+                    default:
+                        Settings.shared.isAdvertiserTrackingEnabled = false
+                    }
+                }
+            }
+        case .authorized:
+            Settings.shared.isAdvertiserTrackingEnabled = true
+            Settings.shared.isAutoLogAppEventsEnabled = true
+        default:
+            Settings.shared.isAdvertiserTrackingEnabled = false
+        }
+    }
+    
+    @objc func paidCallback(noti: Notification) {
+        if let obj = noti.object as? GADBaseModel {
+            self.price += obj.price
+            if self.price > 0.01 {
+                AppEvents.shared.logPurchase(amount: self.price, currency: obj.currency)
+                self.price = 0
+            }
+        }
+    }
 }
 

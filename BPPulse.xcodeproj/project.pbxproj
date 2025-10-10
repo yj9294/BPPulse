@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		847C73142E991E81008E7A69 /* AppLovinSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73132E991E81008E7A69 /* AppLovinSDK */; };
+		847C73172E991F34008E7A69 /* VungleAdsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73162E991F34008E7A69 /* VungleAdsSDK */; };
+		847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73192E992045008E7A69 /* GoogleMobileAds */; };
+		847C732C2E992915008E7A69 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732B2E992915008E7A69 /* FirebaseAnalytics */; };
+		847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732D2E992915008E7A69 /* FirebaseCore */; };
+		847C73302E992915008E7A69 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732F2E992915008E7A69 /* FirebaseCrashlytics */; };
+		847C73322E992915008E7A69 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73312E992915008E7A69 /* FirebasePerformance */; };
+		847C73352E9934DA008E7A69 /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73342E9934DA008E7A69 /* MBProgressHUD */; };
 		848ACB2B2E795173000AA023 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB2A2E795173000AA023 /* SnapKit */; };
 		848ACB2E2E7952ED000AA023 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB2D2E7952ED000AA023 /* IQKeyboardManagerSwift */; };
 		848ACB312E795309000AA023 /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB302E795309000AA023 /* SwifterSwift */; };
-		848ACB342E7953D1000AA023 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB332E7953D1000AA023 /* FirebaseAnalytics */; };
-		848ACB362E7953D1000AA023 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB352E7953D1000AA023 /* FirebaseCrashlytics */; };
-		848ACB382E7953D1000AA023 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB372E7953D1000AA023 /* FirebaseRemoteConfig */; };
 		848ACB3B2E79542C000AA023 /* FacebookAEM in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB3A2E79542C000AA023 /* FacebookAEM */; };
 		848ACB3D2E79542C000AA023 /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB3C2E79542C000AA023 /* FacebookBasics */; };
 		848ACB3F2E79542C000AA023 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB3E2E79542C000AA023 /* FacebookCore */; };
@@ -48,14 +53,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */,
 				848ACB312E795309000AA023 /* SwifterSwift in Frameworks */,
+				847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */,
 				848ACB3B2E79542C000AA023 /* FacebookAEM in Frameworks */,
 				848ACB2B2E795173000AA023 /* SnapKit in Frameworks */,
-				848ACB362E7953D1000AA023 /* FirebaseCrashlytics in Frameworks */,
-				848ACB382E7953D1000AA023 /* FirebaseRemoteConfig in Frameworks */,
+				847C73172E991F34008E7A69 /* VungleAdsSDK in Frameworks */,
 				848ACB3D2E79542C000AA023 /* FacebookBasics in Frameworks */,
-				848ACB342E7953D1000AA023 /* FirebaseAnalytics in Frameworks */,
 				848ACB3F2E79542C000AA023 /* FacebookCore in Frameworks */,
+				847C73142E991E81008E7A69 /* AppLovinSDK in Frameworks */,
+				847C73302E992915008E7A69 /* FirebaseCrashlytics in Frameworks */,
+				847C73352E9934DA008E7A69 /* MBProgressHUD in Frameworks */,
+				847C73322E992915008E7A69 /* FirebasePerformance in Frameworks */,
+				847C732C2E992915008E7A69 /* FirebaseAnalytics in Frameworks */,
 				848ACB2E2E7952ED000AA023 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,12 +112,17 @@
 				848ACB2A2E795173000AA023 /* SnapKit */,
 				848ACB2D2E7952ED000AA023 /* IQKeyboardManagerSwift */,
 				848ACB302E795309000AA023 /* SwifterSwift */,
-				848ACB332E7953D1000AA023 /* FirebaseAnalytics */,
-				848ACB352E7953D1000AA023 /* FirebaseCrashlytics */,
-				848ACB372E7953D1000AA023 /* FirebaseRemoteConfig */,
 				848ACB3A2E79542C000AA023 /* FacebookAEM */,
 				848ACB3C2E79542C000AA023 /* FacebookBasics */,
 				848ACB3E2E79542C000AA023 /* FacebookCore */,
+				847C73132E991E81008E7A69 /* AppLovinSDK */,
+				847C73162E991F34008E7A69 /* VungleAdsSDK */,
+				847C73192E992045008E7A69 /* GoogleMobileAds */,
+				847C732B2E992915008E7A69 /* FirebaseAnalytics */,
+				847C732D2E992915008E7A69 /* FirebaseCore */,
+				847C732F2E992915008E7A69 /* FirebaseCrashlytics */,
+				847C73312E992915008E7A69 /* FirebasePerformance */,
+				847C73342E9934DA008E7A69 /* MBProgressHUD */,
 			);
 			productName = BPPulse;
 			productReference = 848ACAFF2E794F56000AA023 /* BPPulse.app */;
@@ -141,8 +156,12 @@
 				848ACB292E795173000AA023 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				848ACB2C2E7952ED000AA023 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				848ACB2F2E795309000AA023 /* XCRemoteSwiftPackageReference "SwifterSwift" */,
-				848ACB322E7953D1000AA023 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */,
+				847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */,
+				847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 848ACB002E794F56000AA023 /* Products */;
@@ -386,6 +405,46 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppLovin/AppLovin-MAX-Swift-Package.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.4.0;
+			};
+		};
+		847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Vungle/VungleAdsSDK-SwiftPackageManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.6.0;
+			};
+		};
+		847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
+		847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.4.0;
+			};
+		};
+		847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jdg/MBProgressHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		848ACB292E795173000AA023 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -410,14 +469,6 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		848ACB322E7953D1000AA023 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.3.0;
-			};
-		};
 		848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
@@ -429,6 +480,46 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		847C73132E991E81008E7A69 /* AppLovinSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */;
+			productName = AppLovinSDK;
+		};
+		847C73162E991F34008E7A69 /* VungleAdsSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */;
+			productName = VungleAdsSDK;
+		};
+		847C73192E992045008E7A69 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		847C732B2E992915008E7A69 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		847C732D2E992915008E7A69 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		847C732F2E992915008E7A69 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		847C73312E992915008E7A69 /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
+		847C73342E9934DA008E7A69 /* MBProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */;
+			productName = MBProgressHUD;
+		};
 		848ACB2A2E795173000AA023 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 848ACB292E795173000AA023 /* XCRemoteSwiftPackageReference "SnapKit" */;
@@ -443,21 +534,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 848ACB2F2E795309000AA023 /* XCRemoteSwiftPackageReference "SwifterSwift" */;
 			productName = SwifterSwift;
-		};
-		848ACB332E7953D1000AA023 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 848ACB322E7953D1000AA023 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		848ACB352E7953D1000AA023 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 848ACB322E7953D1000AA023 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		848ACB372E7953D1000AA023 /* FirebaseRemoteConfig */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 848ACB322E7953D1000AA023 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseRemoteConfig;
 		};
 		848ACB3A2E79542C000AA023 /* FacebookAEM */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -9,6 +9,23 @@ import UIKit
 
 class PLHomeVC: PLBaseVC {
     
+    private var willAppear = false
+    private var impressDate = Date().addingTimeInterval(-11)
+    private lazy var adView: GADNativeView = {
+        let adView = GADNativeView(.big)
+        adView.layer.cornerRadius = 8
+        adView.layer.masksToBounds = true
+        return adView
+    }()
+    
+    lazy var recentTitleLabel = {
+        let recentTitleLabel = UILabel()
+        recentTitleLabel.text = "Recent Trends"
+        recentTitleLabel.textColor = .black
+        recentTitleLabel.font = .fontWithSize(size: 18  , weigth: .medium)
+        return recentTitleLabel
+    }()
+    
     lazy var segementView = {
         let view = PLHomeSegementView()
         view.didSelectHandle = { [weak self] filter  in
@@ -30,6 +47,7 @@ class PLHomeVC: PLBaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(nativeADLoad), name: .nativeUpdate, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +55,14 @@ class PLHomeVC: PLBaseVC {
         setupNavigationBar()
         
         refreshItem(segementView.item)
+        willAppear = true
+        GADUtil.share.load(GADPositionExt.homeNative)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        willAppear = false
+        GADUtil.share.disappear(GADPositionExt.homeNative)
     }
     
     func setupNavigationBar() {
@@ -91,10 +117,6 @@ class PLHomeVC: PLBaseVC {
             make.left.right.equalToSuperview().inset(16)
         }
 
-        let recentTitleLabel = UILabel()
-        recentTitleLabel.text = "Recent Trends"
-        recentTitleLabel.textColor = .black
-        recentTitleLabel.font = .fontWithSize(size: 18  , weigth: .medium)
         contentViewContainer.addSubview(recentTitleLabel)
         recentTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.bottom).offset(24 * scale)
@@ -114,18 +136,16 @@ class PLHomeVC: PLBaseVC {
             make.right.equalToSuperview().offset(-16)
         }
         
-        let centerView = UIImageView(image: UIImage(named: "home_center"))
-        centerView.contentMode = .scaleAspectFill
-        centerView.layerCornerRadius = 16
-        contentViewContainer.addSubview(centerView)
-        centerView.snp.makeConstraints { make in
-            make.top.equalTo(moreButton.snp.bottom).offset(16 * scale)
+        view.addSubview(adView)
+        adView.snp.remakeConstraints { make in
+            make.top.equalTo(recentTitleLabel.snp.bottom).offset(16 * scale)
             make.left.right.equalToSuperview().inset(16)
+            make.height.equalTo(0)
         }
         
         contentViewContainer.addSubview(statusView)
         statusView.snp.makeConstraints { make in
-            make.top.equalTo(centerView.snp.bottom).offset(24 * scale)
+            make.top.equalTo(adView.snp.bottom).offset(24 * scale)
             make.left.right.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().offset(-16)
         }
@@ -251,14 +271,47 @@ class PLHomeVC: PLBaseVC {
     }
     
     func addAction() {
-        let vc = PLAddVC()
-        vc.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(vc)
+        GADUtil.share.load(GADPositionExt.addInter)
+        GADUtil.share.show(GADPositionExt.addInter) { _ in
+            let vc = PLAddVC()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc)
+        }
     }
     
     func refreshItem(_ filter: PLHomeFilterModel) {
         guard let item = CacheUtil.shared.getHomePulse(filter) else { return }
         statusView.status = item.status
         contentView.item = item
+    }
+    
+    @objc func nativeADLoad(noti: Notification) {
+        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.homeNative.rawValue {
+            if let ad = noti.object as? GADNativeModel {
+                if willAppear {
+                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
+                        adView.nativeAd = ad.nativeAd
+                        impressDate = Date()
+                        if adView.superview != nil {
+                            adView.snp.remakeConstraints { make in
+                                make.top.equalTo(recentTitleLabel.snp.bottom).offset(16 * scale)
+                                make.left.right.equalToSuperview().inset(16)
+                                make.height.equalTo(180).priority(.high)
+                            }
+                        }
+                        return
+                    } else {
+                        NSLog("[ad] (\(position)) 10显示间隔 ")
+                    }
+                }
+            }
+            adView.nativeAd = nil
+            view.addSubview(adView)
+            adView.snp.remakeConstraints { make in
+                make.top.equalTo(recentTitleLabel.snp.bottom).offset(16 * scale)
+                make.left.right.equalToSuperview().inset(16)
+                make.height.equalTo(0).priority(.high)
+            }
+        }
     }
 }

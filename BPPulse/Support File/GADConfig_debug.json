@@ -1,0 +1,60 @@
+{
+    "showTimes":300,
+    "clickTimes":50,
+    "ads": [
+        {
+            "key": "loadingInter",
+            "value": [
+                {
+                    "theAdPriority":1,
+                    "theAdID":"ca-app-pub-3940256099942544/4411468910"
+                }
+            ]
+        },
+        {
+            "key": "recordInter",
+            "value": [
+                {
+                    "theAdPriority":1,
+                    "theAdID":"ca-app-pub-3940256099942544/4411468910"
+                }
+            ]
+        },
+        {
+            "key": "addInter",
+            "value": [
+                {
+                    "theAdPriority":1,
+                    "theAdID":"ca-app-pub-3940256099942544/4411468910"
+                }
+            ]
+        },
+        {
+            "key": "homeNative",
+            "value": [
+                {
+                    "theAdPriority":1,
+                    "theAdID":"ca-app-pub-3940256099942544/3986624511"
+                }
+            ]
+        },
+        {
+            "key": "resultNative",
+            "value": [
+                {
+                    "theAdPriority":1,
+                    "theAdID":"ca-app-pub-3940256099942544/3986624511"
+                }
+            ]
+        },
+        {
+            "key": "infoNative",
+            "value": [
+                {
+                    "theAdPriority":1,
+                    "theAdID":"ca-app-pub-3940256099942544/3986624511"
+                }
+            ]
+        }
+    ]
+}

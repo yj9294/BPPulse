@@ -64,10 +64,8 @@ class PLLaunchVC: PLBaseVC {
             timer = nil
         }
         progress = 0.0
-        duration = 3.0
-//        GADUtil.share.load(.open)
-//        GADUtil.share.load(.native)
-//        GADUtil.share.load(.submit)
+        duration = 10.0
+        GADUtil.share.load(GADPositionExt.loadingInter)
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(loading), userInfo: nil, repeats: true)
     }
     
@@ -76,15 +74,15 @@ class PLLaunchVC: PLBaseVC {
         if progress >= 1.0 {
             progress = 1.0
             timer?.invalidate()
-//            GADUtil.share.show(.open) { [weak self] _ in
-            if self.progress == 1.0 {
-                ScreenUtil.sceneDelegate?.goTabbarVC()
+            GADUtil.share.show(GADPositionExt.loadingInter) { [weak self] _ in
+                guard let self = self else { return }
+                if self.progress == 1.0 {
+                    ScreenUtil.sceneDelegate?.goTabbarVC()
+                }
             }
-//            }
         }
-        if progress > 3 / 15.0 {
-//            , GADUtil.share.isLoaded(.open) {
-            duration = 1.0
+        if self.progress > 0.15, GADUtil.share.isLoaded(GADPositionExt.loadingInter) {
+            self.duration = 0.5
         }
     }
 }

@@ -15,7 +15,7 @@
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<true/>
 	<key>GADApplicationIdentifier</key>
-	<string></string>
+	<string>ca-app-pub-4993384707209094~4264161219</string>
 	<key>GADIsAdManagerApp</key>
 	<true/>
 	<key>GADNativeAdValidatorEnabled</key>
@@ -1535,5 +1535,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to personalize your experience and will help bring Pix Movie to more people in need.</string>
 </dict>
 </plist>
