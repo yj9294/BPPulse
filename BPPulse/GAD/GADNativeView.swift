@@ -60,6 +60,7 @@ class GADNativeView: NativeAdView {
         button.backgroundColor = UIColor.init(hex: 0x15AA00)
         button.layer.cornerRadius = 18
         button.layer.masksToBounds = true
+        button.titleLabel?.font = .fontWithSize(size: 11.0)
         button.setTitleColor(.white, for: .normal)
         return button
     }()
@@ -137,12 +138,12 @@ class GADNativeView: NativeAdView {
         if style == .small {
             self.backgroundColor = .white
             icon.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(20)
+                make.top.equalToSuperview().offset(14)
                 make.left.equalToSuperview().offset(16)
                 make.width.height.equalTo(44)
             }
             title.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(19)
+                make.top.equalToSuperview().offset(14)
                 make.left.equalTo(icon.snp.right).offset(13)
                 make.right.equalToSuperview().offset(-30)
             }

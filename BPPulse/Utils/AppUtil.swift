@@ -40,6 +40,15 @@ class AppUtil: NSObject {
         feedbackGenerator.prepare() // 预加载震动资源，响应更快
         feedbackGenerator.impactOccurred() // 触发震动
     }
+    
+    @CodableUserDefaults(key: "com.release", defaultValue: false)
+    private var isRelease: Bool
+    func setIsRelease(isRelease: Bool) {
+        self.isRelease = isRelease
+    }
+    func getIsRelease() -> Bool{
+        isRelease
+    }
 }
 
 extension String {

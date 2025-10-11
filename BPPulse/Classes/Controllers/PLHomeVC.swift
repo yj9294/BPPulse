@@ -296,7 +296,7 @@ class PLHomeVC: PLBaseVC {
                             adView.snp.remakeConstraints { make in
                                 make.top.equalTo(recentTitleLabel.snp.bottom).offset(16 * scale)
                                 make.left.right.equalToSuperview().inset(16)
-                                make.height.equalTo(180).priority(.high)
+                                make.height.equalTo(170).priority(.high)
                             }
                         }
                         return

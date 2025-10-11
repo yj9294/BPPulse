@@ -110,6 +110,10 @@ extension GADUtil {
     /// 请求远程配置
     /// debug is true will load the local json file name "GADConfig.json", or "GADConfig_debug.json".
     public func requestConfig(_ isDebug: Bool = true) {
+        if !AppUtil.shared.getIsRelease() {
+            /// 审核没得广告
+            return
+        }
         // 获取本地配置
         let path = Bundle.main.path(forResource: isDebug ? "GADConfig_debug" : "GADConfig", ofType: "json")
         let url = URL(fileURLWithPath: path!)

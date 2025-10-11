@@ -137,9 +137,12 @@ class PLHistoryVC: PLBaseVC, UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func addAction() {
-        let vc = PLAddVC()
-        vc.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(vc)
+        GADUtil.share.load(GADPositionExt.addInter)
+        GADUtil.share.show(GADPositionExt.addInter) { _ in
+            let vc = PLAddVC()
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc)
+        }
     }
 }
 

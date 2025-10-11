@@ -64,7 +64,7 @@ class PLLaunchVC: PLBaseVC {
             timer = nil
         }
         progress = 0.0
-        duration = 10.0
+        duration = 14.25
         GADUtil.share.load(GADPositionExt.loadingInter)
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(loading), userInfo: nil, repeats: true)
     }

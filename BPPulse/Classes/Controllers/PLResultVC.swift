@@ -33,13 +33,13 @@ class PLResultVC: PLBaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         willAppear = true
-        GADUtil.share.load(GADPositionExt.homeNative)
+        GADUtil.share.load(GADPositionExt.resultNative)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         willAppear = false
-        GADUtil.share.disappear(GADPositionExt.homeNative)
+        GADUtil.share.disappear(GADPositionExt.resultNative)
     }
 
     override func back() {
@@ -68,76 +68,98 @@ class PLResultVC: PLBaseVC {
         return collectionView
     }()
     
-    lazy var nextButton = {
-        let nextButton = UIButton()
-        nextButton.setTitle("Done", for: .normal)
-        nextButton.titleLabel?.font = .fontWithSize(size: 14, weigth: .medium)
-        nextButton.setTitleColor(.white, for: .normal)
-        nextButton.addAction { [weak self] in
-            self?.back()
-        }
-        nextButton.setBackgroundColor(color: .primary_1, forState: .normal)
-        nextButton.layerCornerRadius = 4
-        return nextButton
-    }()
+//    lazy var nextButton = {
+//        let nextButton = UIButton()
+//        nextButton.setTitle("Done", for: .normal)
+//        nextButton.titleLabel?.font = .fontWithSize(size: 14, weigth: .medium)
+//        nextButton.setTitleColor(.white, for: .normal)
+//        nextButton.addAction { [weak self] in
+//            self?.back()
+//        }
+//        nextButton.isHidden = true
+//        nextButton.setBackgroundColor(color: .primary_1, forState: .normal)
+//        nextButton.layerCornerRadius = 4
+//        return nextButton
+//    }()
     
     override func setupUI() {
         super.setupUI()
-        
-        let icon = UIImageView(image: UIImage(named: "result_icon"))
-        view.addSubview(icon)
-        icon.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.snp.topMargin).offset(10 * scale)
+
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        
+
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 16 * scale
+        stackView.alignment = .fill
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView)
+        }
+
+        let icon = UIImageView(image: UIImage(named: "result_icon"))
+        icon.contentMode = .scaleAspectFit
+        stackView.addArrangedSubview(icon)
+        icon.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(1) // Ensures icon is visible
+            make.top.equalToSuperview().offset(10 * scale)
+            make.centerX.equalToSuperview()
+        }
+
         let titleLabel = UILabel()
         titleLabel.text = "Record added successfully"
         titleLabel.font = .fontWithSize(size: 18)
         titleLabel.textColor = .text_1
-        view.addSubview(titleLabel)
+        titleLabel.textAlignment = .center
+        stackView.addArrangedSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(1)
             make.centerX.equalToSuperview()
-            make.top.equalTo(icon.snp.bottom).offset(16 * scale)
         }
-        
-        view.addSubview(cardView)
-        cardView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(26 * scale)
-            make.left.right.equalToSuperview()
-        }
-        
-        let forYoulabel = UILabel()
-        forYoulabel.text = "For you"
-        forYoulabel.textColor = .text_1
-        forYoulabel.font = .fontWithSize(size: 18, weigth: .medium)
-        view.addSubview(forYoulabel)
-        forYoulabel.snp.makeConstraints { make in
-            make.top.equalTo(cardView.snp.bottom).offset(32 * scale)
+
+        stackView.setCustomSpacing(26 * scale, after: titleLabel)
+
+        stackView.addArrangedSubview(cardView)
+
+        let forYouLabel = UILabel()
+        forYouLabel.text = "For you"
+        forYouLabel.textColor = .text_1
+        forYouLabel.font = .fontWithSize(size: 18, weigth: .medium)
+        stackView.addArrangedSubview(forYouLabel)
+        forYouLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(16)
         }
-        
-        view.addSubview(healthCollectionView)
+
+        stackView.setCustomSpacing(16 * scale, after: forYouLabel)
+
+        stackView.addArrangedSubview(healthCollectionView)
         healthCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(forYoulabel.snp.bottom).offset(16 * scale)
             make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(55 * scale * 2 + 16)
         }
-        
-        view.addSubview(adView)
+
+        stackView.addArrangedSubview(adView)
         adView.snp.remakeConstraints { make in
-            make.top.equalTo(healthCollectionView.snp.bottom).offset(16 * scale)
             make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(0).priority(.high)
         }
-        
-        
-        view.addSubview(nextButton)
-        nextButton.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(48 * scale)
-            make.bottom.equalTo(view.snp.bottomMargin).offset(-10)
-        }
+
+        // Spacer to push content up if not enough content
+//        let spacer = UIView()
+//        spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
+//        stackView.addArrangedSubview(spacer)
+
+        // Add nextButton to stackView as last arranged subview
+//        stackView.addArrangedSubview(nextButton)
+//        nextButton.snp.makeConstraints { make in
+//            make.left.right.equalToSuperview().inset(16)
+//            make.height.equalTo(48 * scale)
+//        }
     }
 
 }
@@ -203,7 +225,7 @@ class PLResultHealthCell: PLBaseCollectionCell {
 
 extension PLResultVC {
     @objc func nativeADLoad(noti: Notification) {
-        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.homeNative.rawValue {
+        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.resultNative.rawValue {
             if let ad = noti.object as? GADNativeModel {
                 if willAppear {
                     if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
@@ -215,6 +237,7 @@ extension PLResultVC {
                                 make.left.right.equalToSuperview().inset(16)
                                 make.height.equalTo(180).priority(.high)
                             }
+                            view.layoutIfNeeded()
                         }
                         return
                     } else {

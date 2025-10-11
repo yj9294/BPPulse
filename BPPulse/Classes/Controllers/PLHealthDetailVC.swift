@@ -10,6 +10,15 @@ import ObjectiveC
 
 class PLHealthDetailVC: PLBaseVC {
     
+    private var willAppear = false
+    private var impressDate = Date().addingTimeInterval(-11)
+    private lazy var adView: GADNativeView = {
+        let adView = GADNativeView(.small)
+        adView.layer.cornerRadius = 8
+        adView.layer.masksToBounds = true
+        return adView
+    }()
+    
     var item: PLHealthModel? = nil {
         didSet {
             if let item = item {
@@ -20,6 +29,19 @@ class PLHealthDetailVC: PLBaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(nativeADLoad), name: .nativeUpdate, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        willAppear = true
+        GADUtil.share.load(GADPositionExt.infoNative)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        willAppear = false
+        GADUtil.share.disappear(GADPositionExt.infoNative)
     }
 
     private func setupUI(with item: PLHealthModel) {
@@ -41,14 +63,21 @@ class PLHealthDetailVC: PLBaseVC {
             make.width.equalTo(scrollView)
         }
         
-        let headerImageView = UIImageView(image: item.bgIcon)
-        headerImageView.contentMode = .scaleAspectFit
-        contentView.addSubview(headerImageView)
-        headerImageView.snp.makeConstraints { make in
+//        let headerImageView = UIImageView(image: item.bgIcon)
+//        headerImageView.contentMode = .scaleAspectFit
+//        contentView.addSubview(headerImageView)
+//        headerImageView.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(16)
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(180)
+//            make.width.lessThanOrEqualToSuperview().offset(-32)
+//        }
+        
+        contentView.addSubview(adView)
+        adView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(180)
-            make.width.lessThanOrEqualToSuperview().offset(-32)
+            make.left.right.equalToSuperview().inset(16)
+            make.height.equalTo(0).priority(.high)
         }
         
         let titleLabel = UILabel()
@@ -57,7 +86,7 @@ class PLHealthDetailVC: PLBaseVC {
         titleLabel.numberOfLines = 0
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(headerImageView.snp.bottom).offset(12)
+            make.top.equalTo(adView.snp.bottom).offset(12)
             make.left.right.equalToSuperview().inset(16)
         }
         
@@ -197,6 +226,36 @@ class PLHealthDetailVC: PLBaseVC {
             if model.hashValue == sender.tag {
                 self.item = model
                 break
+            }
+        }
+    }
+    
+    @objc func nativeADLoad(noti: Notification) {
+        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.infoNative.rawValue {
+            if let ad = noti.object as? GADNativeModel {
+                if willAppear {
+                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
+                        adView.nativeAd = ad.nativeAd
+                        impressDate = Date()
+                        if adView.superview != nil {
+                            adView.snp.remakeConstraints { make in
+                                make.top.equalToSuperview().offset(16)
+                                make.left.right.equalToSuperview().inset(16)
+                                make.height.equalTo(108).priority(.high)
+                            }
+                        }
+                        return
+                    } else {
+                        NSLog("[ad] (\(position)) 10显示间隔 ")
+                    }
+                }
+            }
+            adView.nativeAd = nil
+            view.addSubview(adView)
+            adView.snp.remakeConstraints { make in
+                make.top.equalToSuperview().offset(16)
+                make.left.right.equalToSuperview().inset(16)
+                make.height.equalTo(0).priority(.high)
             }
         }
     }

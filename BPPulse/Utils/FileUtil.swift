@@ -240,3 +240,105 @@ extension KeyedEncodingContainer {
         }
     }
 }
+
+/// 判断是否是数字
+///
+/// - Parameter string:
+/// - Returns:
+func isPurnInt(string: String) -> Bool {
+    let scan: Scanner = Scanner(string: string)
+    var val:Int = 0
+    return scan.scanInt(&val) && scan.isAtEnd
+}
+
+
+extension Dictionary {
+    var jsonString: String? {
+        guard let data = try? JSONSerialization.data(withJSONObject: self, options: []) else {
+            return nil
+        }
+        let jsonString = String(data: data, encoding: .utf8)
+        return jsonString
+    }
+    
+    var data: Data? {
+        guard let data = try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted) else {
+            return nil
+        }
+        return data
+    }
+    
+    var encoding: Data? {
+        guard let str = self.jsonString else {
+            return nil
+        }
+
+        guard let base64 = str.encodBase64() else {
+            return nil
+        }
+        
+        var ret: String = ""
+        for uni in base64.unicodeScalars {
+            var val = uni.value
+            if val >= 0x41 && val <= 0x5A { // If in the range "A -"..."Y", just as an example
+                val += 1 // or whatever ...
+            }
+            ret.append(Character(UnicodeScalar(val)!))
+        }
+        
+        guard let data = ret.data(using: .utf8) else {
+            return nil
+        }
+        
+        return data
+    }
+    
+}
+
+extension String {
+      //Base64编码
+      func encodBase64() -> String? {
+          if let data = self.data(using: .utf8) {
+              return data.base64EncodedString()
+          }
+          return nil
+      }
+ 
+     //Base64解码
+     func decodeBase64() -> String? {
+         if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) {
+             return String(data: data, encoding: .utf8)
+         }
+         return nil
+     }
+ }
+
+extension Data {
+    
+    var decoding: Data? {
+        
+        guard let codeStr = String(data: self, encoding: .utf8) else {
+            return nil
+        }
+        
+        var ret: String = ""
+        for uni in codeStr.unicodeScalars {
+            var val = uni.value
+            if val >= 0x42 && val <= 0x5B { // B - Z
+                val -= 1 // or whatever ...
+            }
+            ret.append(Character(UnicodeScalar(val)!))
+        }
+        
+        guard let base64Str = ret.decodeBase64() else {
+            return nil
+        }
+        
+        guard let data = base64Str.data(using: .utf8) else {
+            return nil
+        }
+        
+        return data
+    }
+    
+}

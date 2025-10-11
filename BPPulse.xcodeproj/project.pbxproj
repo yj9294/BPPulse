@@ -15,6 +15,7 @@
 		847C73302E992915008E7A69 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732F2E992915008E7A69 /* FirebaseCrashlytics */; };
 		847C73322E992915008E7A69 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73312E992915008E7A69 /* FirebasePerformance */; };
 		847C73352E9934DA008E7A69 /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73342E9934DA008E7A69 /* MBProgressHUD */; };
+		847C73C62E9A1CD7008E7A69 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73C52E9A1CD7008E7A69 /* Alamofire */; };
 		848ACB2B2E795173000AA023 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB2A2E795173000AA023 /* SnapKit */; };
 		848ACB2E2E7952ED000AA023 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB2D2E7952ED000AA023 /* IQKeyboardManagerSwift */; };
 		848ACB312E795309000AA023 /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB302E795309000AA023 /* SwifterSwift */; };
@@ -53,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847C73C62E9A1CD7008E7A69 /* Alamofire in Frameworks */,
 				847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */,
 				848ACB312E795309000AA023 /* SwifterSwift in Frameworks */,
 				847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */,
@@ -123,6 +125,7 @@
 				847C732F2E992915008E7A69 /* FirebaseCrashlytics */,
 				847C73312E992915008E7A69 /* FirebasePerformance */,
 				847C73342E9934DA008E7A69 /* MBProgressHUD */,
+				847C73C52E9A1CD7008E7A69 /* Alamofire */,
 			);
 			productName = BPPulse;
 			productReference = 848ACAFF2E794F56000AA023 /* BPPulse.app */;
@@ -162,6 +165,7 @@
 				847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
+				847C73C42E9A1CD7008E7A69 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 848ACB002E794F56000AA023 /* Products */;
@@ -200,7 +204,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251009.1;
+				CURRENT_PROJECT_VERSION = 20251011.2;
 				DEVELOPMENT_TEAM = 7HH5ZUB44G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BPPulse/Info.plist;
@@ -217,7 +221,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bp.pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -234,7 +238,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251009.1;
+				CURRENT_PROJECT_VERSION = 20251011.2;
 				DEVELOPMENT_TEAM = 7HH5ZUB44G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BPPulse/Info.plist;
@@ -251,7 +255,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bp.pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -445,6 +449,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		847C73C42E9A1CD7008E7A69 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 		848ACB292E795173000AA023 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -519,6 +531,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */;
 			productName = MBProgressHUD;
+		};
+		847C73C52E9A1CD7008E7A69 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847C73C42E9A1CD7008E7A69 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		848ACB2A2E795173000AA023 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
