@@ -15,6 +15,7 @@ import GoogleMobileAds
 import AppLovinSDK
 import VungleAdsSDK
 import FBAEMKit
+import FirebaseAnalytics
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -40,6 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.requestGADConfig()
         }
         checkNetwork()
+        Analytics.logEvent("myFirstOpen", parameters: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(paidCallback(noti:)), name: .adPaid, object: nil)
         guard let url = connectionOptions.urlContexts.first?.url else {
             return
