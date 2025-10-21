@@ -30,9 +30,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        Settings.shared.isAdvertiserIDCollectionEnabled = true
 
         /// 设置全局代理 用于查找vc
         ScreenUtil.sceneDelegate = self
+        
+        AppEvents.shared.activateApp()
         
         MobileAds.shared.requestConfiguration.testDeviceIdentifiers = [ "d547a03032c9508d3f926616d93cfa5b", "bda4937be36282e4dcfd7f6bcfefbdb8" ]
         GADUtil.initializePositions(GADPositionExt.allCases)
@@ -46,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = connectionOptions.urlContexts.first?.url else {
             return
         }
-
+        
         ApplicationDelegate.shared.application(
             UIApplication.shared,
             open: url,
@@ -154,9 +157,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Meta
         if ATTrackingManager.trackingAuthorizationStatus == .authorized {
-            Settings.shared.isAdvertiserTrackingEnabled = true
+            Settings.shared.isAdvertiserIDCollectionEnabled = true
         } else {
-            Settings.shared.isAdvertiserTrackingEnabled = false
         }
 
         // Mintegral
@@ -184,18 +186,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 ATTrackingManager.requestTrackingAuthorization { results in
                     switch results {
                     case .authorized:
-                        Settings.shared.isAdvertiserTrackingEnabled = true
+                        Settings.shared.isAdvertiserIDCollectionEnabled = true
                         Settings.shared.isAutoLogAppEventsEnabled = true
                     default:
-                        Settings.shared.isAdvertiserTrackingEnabled = false
+                        break
                     }
                 }
             }
         case .authorized:
-            Settings.shared.isAdvertiserTrackingEnabled = true
+            Settings.shared.isAdvertiserIDCollectionEnabled = true
             Settings.shared.isAutoLogAppEventsEnabled = true
         default:
-            Settings.shared.isAdvertiserTrackingEnabled = false
+            Settings.shared.isAdvertiserIDCollectionEnabled = false
         }
     }
     

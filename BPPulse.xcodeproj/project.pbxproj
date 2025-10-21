@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840344132EA62EC20085AB9F /* FacebookAEM in Frameworks */ = {isa = PBXBuildFile; productRef = 840344122EA62EC20085AB9F /* FacebookAEM */; };
+		840344152EA62EC20085AB9F /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 840344142EA62EC20085AB9F /* FacebookBasics */; };
+		840344172EA62EC20085AB9F /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 840344162EA62EC20085AB9F /* FacebookCore */; };
 		847C73142E991E81008E7A69 /* AppLovinSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73132E991E81008E7A69 /* AppLovinSDK */; };
 		847C73172E991F34008E7A69 /* VungleAdsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73162E991F34008E7A69 /* VungleAdsSDK */; };
 		847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73192E992045008E7A69 /* GoogleMobileAds */; };
@@ -19,9 +22,6 @@
 		848ACB2B2E795173000AA023 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB2A2E795173000AA023 /* SnapKit */; };
 		848ACB2E2E7952ED000AA023 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB2D2E7952ED000AA023 /* IQKeyboardManagerSwift */; };
 		848ACB312E795309000AA023 /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB302E795309000AA023 /* SwifterSwift */; };
-		848ACB3B2E79542C000AA023 /* FacebookAEM in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB3A2E79542C000AA023 /* FacebookAEM */; };
-		848ACB3D2E79542C000AA023 /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB3C2E79542C000AA023 /* FacebookBasics */; };
-		848ACB3F2E79542C000AA023 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 848ACB3E2E79542C000AA023 /* FacebookCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,14 +55,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				847C73C62E9A1CD7008E7A69 /* Alamofire in Frameworks */,
+				840344172EA62EC20085AB9F /* FacebookCore in Frameworks */,
+				840344132EA62EC20085AB9F /* FacebookAEM in Frameworks */,
 				847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */,
 				848ACB312E795309000AA023 /* SwifterSwift in Frameworks */,
 				847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */,
-				848ACB3B2E79542C000AA023 /* FacebookAEM in Frameworks */,
 				848ACB2B2E795173000AA023 /* SnapKit in Frameworks */,
 				847C73172E991F34008E7A69 /* VungleAdsSDK in Frameworks */,
-				848ACB3D2E79542C000AA023 /* FacebookBasics in Frameworks */,
-				848ACB3F2E79542C000AA023 /* FacebookCore in Frameworks */,
+				840344152EA62EC20085AB9F /* FacebookBasics in Frameworks */,
 				847C73142E991E81008E7A69 /* AppLovinSDK in Frameworks */,
 				847C73302E992915008E7A69 /* FirebaseCrashlytics in Frameworks */,
 				847C73352E9934DA008E7A69 /* MBProgressHUD in Frameworks */,
@@ -114,9 +114,6 @@
 				848ACB2A2E795173000AA023 /* SnapKit */,
 				848ACB2D2E7952ED000AA023 /* IQKeyboardManagerSwift */,
 				848ACB302E795309000AA023 /* SwifterSwift */,
-				848ACB3A2E79542C000AA023 /* FacebookAEM */,
-				848ACB3C2E79542C000AA023 /* FacebookBasics */,
-				848ACB3E2E79542C000AA023 /* FacebookCore */,
 				847C73132E991E81008E7A69 /* AppLovinSDK */,
 				847C73162E991F34008E7A69 /* VungleAdsSDK */,
 				847C73192E992045008E7A69 /* GoogleMobileAds */,
@@ -126,6 +123,9 @@
 				847C73312E992915008E7A69 /* FirebasePerformance */,
 				847C73342E9934DA008E7A69 /* MBProgressHUD */,
 				847C73C52E9A1CD7008E7A69 /* Alamofire */,
+				840344122EA62EC20085AB9F /* FacebookAEM */,
+				840344142EA62EC20085AB9F /* FacebookBasics */,
+				840344162EA62EC20085AB9F /* FacebookCore */,
 			);
 			productName = BPPulse;
 			productReference = 848ACAFF2E794F56000AA023 /* BPPulse.app */;
@@ -159,13 +159,13 @@
 				848ACB292E795173000AA023 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				848ACB2C2E7952ED000AA023 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				848ACB2F2E795309000AA023 /* XCRemoteSwiftPackageReference "SwifterSwift" */,
-				848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */,
 				847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */,
 				847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
 				847C73C42E9A1CD7008E7A69 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 848ACB002E794F56000AA023 /* Products */;
@@ -204,7 +204,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251011.2;
+				CURRENT_PROJECT_VERSION = 20251015.1;
 				DEVELOPMENT_TEAM = 7HH5ZUB44G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BPPulse/Info.plist;
@@ -221,7 +221,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bp.pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -238,7 +238,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251011.2;
+				CURRENT_PROJECT_VERSION = 20251015.1;
 				DEVELOPMENT_TEAM = 7HH5ZUB44G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BPPulse/Info.plist;
@@ -255,7 +255,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bp.pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -409,6 +409,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				branch = releases/v18.0.1;
+				kind = branch;
+			};
+		};
 		847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppLovin/AppLovin-MAX-Swift-Package.git";
@@ -481,17 +489,24 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 14.1.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		840344122EA62EC20085AB9F /* FacebookAEM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookAEM;
+		};
+		840344142EA62EC20085AB9F /* FacebookBasics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookBasics;
+		};
+		840344162EA62EC20085AB9F /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
 		847C73132E991E81008E7A69 /* AppLovinSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */;
@@ -551,21 +566,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 848ACB2F2E795309000AA023 /* XCRemoteSwiftPackageReference "SwifterSwift" */;
 			productName = SwifterSwift;
-		};
-		848ACB3A2E79542C000AA023 /* FacebookAEM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookAEM;
-		};
-		848ACB3C2E79542C000AA023 /* FacebookBasics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookBasics;
-		};
-		848ACB3E2E79542C000AA023 /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 848ACB392E79542C000AA023 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
