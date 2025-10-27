@@ -1,5 +1,5 @@
 {
-  "originHash" : "98a617c01646ddf426d7b2265ed6fb27378abde89a204479598e683c64412f8b",
+  "originHash" : "b27b5c9d519d04f994de3de274f5f74eeb56ddfb6341326d5c36a989d766f38c",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardNotification.git",
       "state" : {
-        "revision" : "25c6a83380042141d9a2f80cdb2832595a7bf6bc",
-        "version" : "1.0.5"
+        "revision" : "08bdc90e7db64ac88f51da5dc9e82f4c247e7057",
+        "version" : "1.0.6"
       }
     },
     {
@@ -168,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardToolbar.git",
       "state" : {
-        "revision" : "fbf91109cbc00e295d52c50e4b6dd8fa98f08ca5",
-        "version" : "1.1.2"
+        "revision" : "9fef421f6fb39a3e0495f0004f9111b8eaaf0e69",
+        "version" : "1.1.3"
       }
     },
     {
@@ -177,8 +177,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardToolbarManager.git",
       "state" : {
-        "revision" : "ec26659062e6b9bc65e26643269f38eca46846d7",
-        "version" : "1.1.3"
+        "revision" : "ebbb417870237c4ed8d7a4876c18970c3ae54264",
+        "version" : "1.1.4"
       }
     },
     {
@@ -186,8 +186,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQTextInputViewNotification.git",
       "state" : {
-        "revision" : "4347f8eb6bf8880014606684105e447229cc29ea",
-        "version" : "1.0.8"
+        "revision" : "723784a2197121bb76a940cc6d79fd2fa6c23f43",
+        "version" : "1.0.9"
       }
     },
     {
@@ -267,8 +267,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
-        "revision" : "2547102afd04fe49f1b286090f13ebce07284980",
-        "version" : "1.31.1"
+        "revision" : "c6fe6442e6a64250495669325044052e113e990c",
+        "version" : "1.32.0"
       }
     },
     {
@@ -278,15 +278,6 @@
       "state" : {
         "revision" : "5d948a15446bddb6c367bc7e7100cfcbaa0e9b57",
         "version" : "8.0.0"
-      }
-    },
-    {
-      "identity" : "vungleadssdk-swiftpackagemanager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Vungle/VungleAdsSDK-SwiftPackageManager.git",
-      "state" : {
-        "revision" : "ba979b52fe380523b2072720da495d38a8cf9714",
-        "version" : "7.6.0"
       }
     }
   ],

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58943380E710DAAA9890D7EA /* Pods_BPPulse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5EC44EDBC748C618AF79B9 /* Pods_BPPulse.framework */; };
 		840344132EA62EC20085AB9F /* FacebookAEM in Frameworks */ = {isa = PBXBuildFile; productRef = 840344122EA62EC20085AB9F /* FacebookAEM */; };
 		840344152EA62EC20085AB9F /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 840344142EA62EC20085AB9F /* FacebookBasics */; };
 		840344172EA62EC20085AB9F /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 840344162EA62EC20085AB9F /* FacebookCore */; };
-		847C73142E991E81008E7A69 /* AppLovinSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73132E991E81008E7A69 /* AppLovinSDK */; };
-		847C73172E991F34008E7A69 /* VungleAdsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73162E991F34008E7A69 /* VungleAdsSDK */; };
+		846DEB182EAF165A00E91B62 /* AppLovinAdapterTarget in Frameworks */ = {isa = PBXBuildFile; productRef = 846DEB172EAF165A00E91B62 /* AppLovinAdapterTarget */; };
 		847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73192E992045008E7A69 /* GoogleMobileAds */; };
 		847C732C2E992915008E7A69 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732B2E992915008E7A69 /* FirebaseAnalytics */; };
 		847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732D2E992915008E7A69 /* FirebaseCore */; };
@@ -25,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12BBCAE3C7ACB227CCBD1B2B /* Pods-BPPulse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BPPulse.debug.xcconfig"; path = "Target Support Files/Pods-BPPulse/Pods-BPPulse.debug.xcconfig"; sourceTree = "<group>"; };
+		22A132EDC529D405487DCA7D /* Pods-BPPulse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BPPulse.release.xcconfig"; path = "Target Support Files/Pods-BPPulse/Pods-BPPulse.release.xcconfig"; sourceTree = "<group>"; };
+		4F5EC44EDBC748C618AF79B9 /* Pods_BPPulse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BPPulse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		848ACAFF2E794F56000AA023 /* BPPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BPPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -61,25 +64,36 @@
 				848ACB312E795309000AA023 /* SwifterSwift in Frameworks */,
 				847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */,
 				848ACB2B2E795173000AA023 /* SnapKit in Frameworks */,
-				847C73172E991F34008E7A69 /* VungleAdsSDK in Frameworks */,
 				840344152EA62EC20085AB9F /* FacebookBasics in Frameworks */,
-				847C73142E991E81008E7A69 /* AppLovinSDK in Frameworks */,
 				847C73302E992915008E7A69 /* FirebaseCrashlytics in Frameworks */,
 				847C73352E9934DA008E7A69 /* MBProgressHUD in Frameworks */,
 				847C73322E992915008E7A69 /* FirebasePerformance in Frameworks */,
 				847C732C2E992915008E7A69 /* FirebaseAnalytics in Frameworks */,
 				848ACB2E2E7952ED000AA023 /* IQKeyboardManagerSwift in Frameworks */,
+				846DEB182EAF165A00E91B62 /* AppLovinAdapterTarget in Frameworks */,
+				58943380E710DAAA9890D7EA /* Pods_BPPulse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11F1ECBCBBE242007C924228 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				12BBCAE3C7ACB227CCBD1B2B /* Pods-BPPulse.debug.xcconfig */,
+				22A132EDC529D405487DCA7D /* Pods-BPPulse.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		848ACAF62E794F56000AA023 = {
 			isa = PBXGroup;
 			children = (
 				848ACB012E794F56000AA023 /* BPPulse */,
 				848ACB002E794F56000AA023 /* Products */,
+				11F1ECBCBBE242007C924228 /* Pods */,
+				D512BEADE65077C6DA6C2B8F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +105,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D512BEADE65077C6DA6C2B8F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F5EC44EDBC748C618AF79B9 /* Pods_BPPulse.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -98,9 +120,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 848ACB122E794F57000AA023 /* Build configuration list for PBXNativeTarget "BPPulse" */;
 			buildPhases = (
+				F1AE29B529DF92773821F954 /* [CP] Check Pods Manifest.lock */,
 				848ACAFB2E794F56000AA023 /* Sources */,
 				848ACAFC2E794F56000AA023 /* Frameworks */,
 				848ACAFD2E794F56000AA023 /* Resources */,
+				7F7D8C623EF14DF9A3BCD572 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -114,8 +138,6 @@
 				848ACB2A2E795173000AA023 /* SnapKit */,
 				848ACB2D2E7952ED000AA023 /* IQKeyboardManagerSwift */,
 				848ACB302E795309000AA023 /* SwifterSwift */,
-				847C73132E991E81008E7A69 /* AppLovinSDK */,
-				847C73162E991F34008E7A69 /* VungleAdsSDK */,
 				847C73192E992045008E7A69 /* GoogleMobileAds */,
 				847C732B2E992915008E7A69 /* FirebaseAnalytics */,
 				847C732D2E992915008E7A69 /* FirebaseCore */,
@@ -126,6 +148,7 @@
 				840344122EA62EC20085AB9F /* FacebookAEM */,
 				840344142EA62EC20085AB9F /* FacebookBasics */,
 				840344162EA62EC20085AB9F /* FacebookCore */,
+				846DEB172EAF165A00E91B62 /* AppLovinAdapterTarget */,
 			);
 			productName = BPPulse;
 			productReference = 848ACAFF2E794F56000AA023 /* BPPulse.app */;
@@ -159,13 +182,12 @@
 				848ACB292E795173000AA023 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				848ACB2C2E7952ED000AA023 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				848ACB2F2E795309000AA023 /* XCRemoteSwiftPackageReference "SwifterSwift" */,
-				847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */,
-				847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */,
 				847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				847C732A2E992915008E7A69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
 				847C73C42E9A1CD7008E7A69 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				846DEB162EAF165A00E91B62 /* XCRemoteSwiftPackageReference "googleads-mobile-ios-mediation-applovin" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 848ACB002E794F56000AA023 /* Products */;
@@ -187,6 +209,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7F7D8C623EF14DF9A3BCD572 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BPPulse/Pods-BPPulse-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BPPulse/Pods-BPPulse-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BPPulse/Pods-BPPulse-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1AE29B529DF92773821F954 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BPPulse-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		848ACAFB2E794F56000AA023 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -200,6 +268,7 @@
 /* Begin XCBuildConfiguration section */
 		848ACB132E794F57000AA023 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 12BBCAE3C7ACB227CCBD1B2B /* Pods-BPPulse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -221,7 +290,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bp.pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -234,6 +303,7 @@
 		};
 		848ACB142E794F57000AA023 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22A132EDC529D405487DCA7D /* Pods-BPPulse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -255,7 +325,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bp.pulse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -417,20 +487,12 @@
 				kind = branch;
 			};
 		};
-		847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */ = {
+		846DEB162EAF165A00E91B62 /* XCRemoteSwiftPackageReference "googleads-mobile-ios-mediation-applovin" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppLovin/AppLovin-MAX-Swift-Package.git";
+			repositoryURL = "https://github.com/googleads/googleads-mobile-ios-mediation-applovin.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 13.4.0;
-			};
-		};
-		847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Vungle/VungleAdsSDK-SwiftPackageManager.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.6.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 		847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
@@ -507,15 +569,10 @@
 			package = 840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookCore;
 		};
-		847C73132E991E81008E7A69 /* AppLovinSDK */ = {
+		846DEB172EAF165A00E91B62 /* AppLovinAdapterTarget */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 847C73122E991E81008E7A69 /* XCRemoteSwiftPackageReference "AppLovin-MAX-Swift-Package" */;
-			productName = AppLovinSDK;
-		};
-		847C73162E991F34008E7A69 /* VungleAdsSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 847C73152E991F34008E7A69 /* XCRemoteSwiftPackageReference "VungleAdsSDK-SwiftPackageManager" */;
-			productName = VungleAdsSDK;
+			package = 846DEB162EAF165A00E91B62 /* XCRemoteSwiftPackageReference "googleads-mobile-ios-mediation-applovin" */;
+			productName = AppLovinAdapterTarget;
 		};
 		847C73192E992045008E7A69 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;

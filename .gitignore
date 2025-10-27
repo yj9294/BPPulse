@@ -1,4 +1,6 @@
 # Logs
+Pods/
+Pod/
 logs
 *.log
 npm-debug.log*

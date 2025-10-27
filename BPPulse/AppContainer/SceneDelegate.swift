@@ -13,7 +13,9 @@ import Network
 import FacebookCore
 import GoogleMobileAds
 import AppLovinSDK
-import VungleAdsSDK
+import PAGAdSDK
+import PangleAdapter
+import MTGSDK
 import FBAEMKit
 import FirebaseAnalytics
 
@@ -31,6 +33,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         Settings.shared.isAdvertiserIDCollectionEnabled = true
+        
+        // applovin
+        ALPrivacySettings.setHasUserConsent(true)
+        ALPrivacySettings.setDoNotSell(true)
+
+        // pangle
+        GADMediationAdapterPangle.setGDPRConsent(PAGGDPRConsentType.consent.rawValue)
+        
+        /// MTG
+        MTGSDK.sharedInstance().consentStatus = true
+        MTGSDK.sharedInstance().doNotTrackStatus = false
 
         /// 设置全局代理 用于查找vc
         ScreenUtil.sceneDelegate = self
@@ -143,39 +156,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.requestConfig()
             }
         }
-    }
-    
-    func adConfig() {
-        // Create the initialization configuration
-        ALPrivacySettings.setHasUserConsent(true)
-        ALPrivacySettings.setDoNotSell(true)
-
-        // Liftoff
-        VunglePrivacySettings.setGDPRStatus(true)
-        VunglePrivacySettings.setGDPRMessageVersion("v1.0.0")
-        VunglePrivacySettings.setCCPAStatus(true)
-
-        // Meta
-        if ATTrackingManager.trackingAuthorizationStatus == .authorized {
-            Settings.shared.isAdvertiserIDCollectionEnabled = true
-        } else {
-        }
-
-        // Mintegral
-//        MTGSDK.sharedInstance().consentStatus = true
-//        MTGSDK.sharedInstance().doNotTrackStatus = false
-
-        // Pangle 不需要设置
-
-        // Unity
-//        let gdprMetaData = UADSMetaData()
-//        gdprMetaData.set("gdpr.consent", value: true)
-//        gdprMetaData.commit()
-
-//        let ccpaMetaData = UADSMetaData()
-//        ccpaMetaData.set("privacy.consent", value: true)
-//        ccpaMetaData.commit()
-
     }
     
     func requestTrackingAuthorization() {
