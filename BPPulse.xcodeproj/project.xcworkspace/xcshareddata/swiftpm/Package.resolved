@@ -1,5 +1,5 @@
 {
-  "originHash" : "98a617c01646ddf426d7b2265ed6fb27378abde89a204479598e683c64412f8b",
+  "originHash" : "b27b5c9d519d04f994de3de274f5f74eeb56ddfb6341326d5c36a989d766f38c",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -278,15 +278,6 @@
       "state" : {
         "revision" : "5d948a15446bddb6c367bc7e7100cfcbaa0e9b57",
         "version" : "8.0.0"
-      }
-    },
-    {
-      "identity" : "vungleadssdk-swiftpackagemanager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Vungle/VungleAdsSDK-SwiftPackageManager.git",
-      "state" : {
-        "revision" : "ba979b52fe380523b2072720da495d38a8cf9714",
-        "version" : "7.6.0"
       }
     }
   ],
