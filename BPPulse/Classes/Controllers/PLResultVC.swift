@@ -44,6 +44,8 @@ class PLResultVC: PLBaseVC {
 
     override func back() {
         navigationController?.popToRootViewController(animated: true)
+        GADUtil.share.load(GADPositionExt.backInter)
+        GADUtil.share.show(GADPositionExt.backInter)
     }
     
     lazy var cardView = {
