@@ -8,6 +8,8 @@ target 'BPPulse' do
   # Pods for BPPulse
 pod 'GoogleMobileAdsMediationPangle'
 pod 'GoogleMobileAdsMediationMintegral'
+pod 'GoogleMobileAdsMediationFacebook'
+
 end
 
 post_install do |installer|

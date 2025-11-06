@@ -2,8 +2,12 @@ PODS:
   - Ads-Global (7.2.0.4):
     - Ads-Global/BUAdSDK (= 7.2.0.4)
   - Ads-Global/BUAdSDK (7.2.0.4)
+  - FBAudienceNetwork (6.17.1)
   - Google-Mobile-Ads-SDK (12.5.0):
     - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleMobileAdsMediationFacebook (6.17.1.0):
+    - FBAudienceNetwork (= 6.17.1)
+    - Google-Mobile-Ads-SDK (~> 12.0)
   - GoogleMobileAdsMediationMintegral (7.7.8.0):
     - Google-Mobile-Ads-SDK (~> 12.0)
     - MintegralAdSDK/All (= 7.7.8)
@@ -38,13 +42,16 @@ PODS:
     - MintegralAdSDK/NativeAd
 
 DEPENDENCIES:
+  - GoogleMobileAdsMediationFacebook
   - GoogleMobileAdsMediationMintegral
   - GoogleMobileAdsMediationPangle
 
 SPEC REPOS:
   trunk:
     - Ads-Global
+    - FBAudienceNetwork
     - Google-Mobile-Ads-SDK
+    - GoogleMobileAdsMediationFacebook
     - GoogleMobileAdsMediationMintegral
     - GoogleMobileAdsMediationPangle
     - GoogleUserMessagingPlatform
@@ -52,12 +59,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Ads-Global: 721d47b5f1b5d0d3f2996a4e820a8081a125c0b4
+  FBAudienceNetwork: eb3ffbf2b35df25e21e163657044ffef66616a40
   Google-Mobile-Ads-SDK: 6df9aadcee32bce0ff05bcad56ef2c88a4a5e82b
+  GoogleMobileAdsMediationFacebook: 750a2c14ce0bdf813e4e1d4ab4aa283f72f8a875
   GoogleMobileAdsMediationMintegral: 0aefaa2f0608c210eb26dd6a6207d8c1bd992bbd
   GoogleMobileAdsMediationPangle: abf2cdd912d98088af4be23191d6bcd30b845747
   GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
   MintegralAdSDK: 07e018290689b906499d8285654bba42681cafcf
 
-PODFILE CHECKSUM: 00efc86b9f91c0dd16724a74861ff1c42b4b41da
+PODFILE CHECKSUM: a825b4b96202aee066c3c72fde2229ba5f21269e
 
 COCOAPODS: 1.16.2

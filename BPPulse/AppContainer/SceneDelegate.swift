@@ -18,6 +18,7 @@ import PangleAdapter
 import MTGSDK
 import FBAEMKit
 import FirebaseAnalytics
+import FBAudienceNetwork
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -25,12 +26,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var price: Double
     
     var window: UIWindow?
-    var tabbarVC: PLTabbarVC = PLTabbarVC()
+    
+    lazy var tabbarVC: PLTabbarVC = {
+        let vc = PLTabbarVC()
+        return vc
+    }()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        /// 设置全局代理 用于查找vc
+        ScreenUtil.sceneDelegate = self
+        
         guard let _ = (scene as? UIWindowScene) else { return }
         Settings.shared.isAdvertiserIDCollectionEnabled = true
         
@@ -44,9 +53,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         /// MTG
         MTGSDK.sharedInstance().consentStatus = true
         MTGSDK.sharedInstance().doNotTrackStatus = false
+        
+        // Set the flag as true
+        FBAdSettings.setAdvertiserTrackingEnabled(true)
 
-        /// 设置全局代理 用于查找vc
-        ScreenUtil.sceneDelegate = self
         
         AppEvents.shared.activateApp()
         
@@ -191,4 +201,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 }
-

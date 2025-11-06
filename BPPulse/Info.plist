@@ -2444,8 +2444,16 @@
             <string>ns5j362hk7.skadnetwork</string>
             </dict>
             <dict>
-            <key>SKAdNetworkIdentifier</key>
-            <string>mqn7fxpca7.skadnetwork</string>
+                <key>SKAdNetworkIdentifier</key>
+                <string>mqn7fxpca7.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
+                <string>v9wttpbfk9.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
+                <string>n38lu8286q.skadnetwork</string>
             </dict>
 	</array>
 	<key>UIAppFonts</key>

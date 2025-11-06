@@ -621,7 +621,7 @@ extension GADInterstitialModel: FullScreenContentDelegate {
         InterstitialAd.load(with: model?.theAdID ?? "", request: GoogleMobileAds.Request()) { [weak self] ad, error in
             guard let self = self else { return }
             if let error = error {
-                NSLog("[AD] (\(self.position)) load ad FAILED for id \(self.model?.theAdID ?? "invalid id")")
+                NSLog("[AD] (\(self.position)) load ad FAILED for id \(self.model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
                 self.loadedHandler?(false, error.localizedDescription)
                 return
             }
@@ -679,7 +679,7 @@ extension GADOpenModel: FullScreenContentDelegate {
         AppOpenAd.load(with: model?.theAdID ?? "", request: GoogleMobileAds.Request()) { [weak self] ad, error in
             guard let self = self else { return }
             if let error = error {
-                NSLog("[AD] (\(self.position)) load ad FAILED for id \(self.model?.theAdID ?? "invalid id")")
+                NSLog("[AD] (\(self.position)) load ad FAILED for id \(self.model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
                 self.loadedHandler?(false, error.localizedDescription)
                 return
             }
@@ -712,7 +712,7 @@ extension GADOpenModel: FullScreenContentDelegate {
     }
     
     func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        NSLog("[AD] (\(self.position)) didFailToPresentFullScreenContentWithError ad FAILED for id \(self.model?.theAdID ?? "invalid id")")
+        NSLog("[AD] (\(self.position)) didFailToPresentFullScreenContentWithError ad FAILED for id \(self.model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
         closeHandler?()
     }
     
@@ -753,7 +753,7 @@ extension GADNativeModel {
 
 extension GADNativeModel: AdLoaderDelegate {
     public func adLoader(_ adLoader: AdLoader, didFailToReceiveAdWithError error: Error) {
-        NSLog("[AD] (\(position.rawValue)) load ad FAILED for id \(model?.theAdID ?? "invalid id")")
+        NSLog("[AD] (\(position.rawValue)) load ad FAILED for id \(model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
         loadedHandler?(false, error.localizedDescription)
     }
 }
