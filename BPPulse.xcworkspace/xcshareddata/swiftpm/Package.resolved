@@ -29,15 +29,6 @@
       }
     },
     {
-      "identity" : "applovin-max-swift-package",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AppLovin/AppLovin-MAX-Swift-Package.git",
-      "state" : {
-        "revision" : "7d1f730673c437b83fba3eec2dee2dcc6ed46c8a",
-        "version" : "13.4.0"
-      }
-    },
-    {
       "identity" : "facebook-ios-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/facebook/facebook-ios-sdk",
@@ -62,15 +53,6 @@
       "state" : {
         "revision" : "2ba031f43ef88a7f6631c84d23794eb99751e891",
         "version" : "3.1.0"
-      }
-    },
-    {
-      "identity" : "googleads-mobile-ios-mediation-applovin",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/googleads/googleads-mobile-ios-mediation-applovin.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "e5d09d8442c31827f88d2fb49f236aec3e0e0791"
       }
     },
     {

@@ -23,7 +23,16 @@ public enum GADPositionExt: String, CaseIterable, GADPosition {
     
     public var isInterstital: Bool {
         switch self {
-        case .loadingInter, .recordInter, .addInter, .backInter:
+        case .loadingInter, .addInter, .backInter:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isRewarded: Bool {
+        switch self {
+        case .recordInter:
             return true
         default:
             return false

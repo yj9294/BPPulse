@@ -41,14 +41,6 @@ class AppUtil: NSObject {
         feedbackGenerator.impactOccurred() // 触发震动
     }
     
-    @CodableUserDefaults(key: "com.release", defaultValue: false)
-    private var isRelease: Bool
-    func setIsRelease(isRelease: Bool) {
-        self.isRelease = isRelease
-    }
-    func getIsRelease() -> Bool{
-        isRelease
-    }
 }
 
 extension String {

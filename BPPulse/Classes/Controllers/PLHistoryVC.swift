@@ -70,15 +70,10 @@ class PLHistoryVC: PLBaseVC, UICollectionViewDataSource, UICollectionViewDelegat
             self.emptryView.isHidden = true
         }
         super.viewWillAppear(animated)
-       
-        willAppear = true
-        GADUtil.share.load(GADPositionExt.homeNative)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        willAppear = false
-        GADUtil.share.disappear(GADPositionExt.homeNative)
     }
     
     func setupNavigationBar() {
@@ -164,45 +159,12 @@ class PLHistoryVC: PLBaseVC, UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func addAction() {
-        GADUtil.share.load(GADPositionExt.addInter)
-        GADUtil.share.show(GADPositionExt.addInter) { _ in
-            let vc = PLAddVC()
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc)
-        }
+        let vc = PLAddVC()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc)
     }
     
     @objc func nativeADLoad(noti: Notification) {
-        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.homeNative.rawValue {
-            if let ad = noti.object as? GADNativeModel {
-                if willAppear {
-                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
-                        adView.nativeAd = ad.nativeAd
-                        impressDate = Date()
-                        if adView.superview != nil {
-                            adView.snp.remakeConstraints { make in
-                                make.top.equalTo(view.snp.topMargin)
-                                make.left.right.equalToSuperview().inset(16)
-                                make.height.equalTo(170).priority(.high)
-                            }
-                            collectionView.contentInset = UIEdgeInsets(top: 170, left: 0, bottom: 0, right: 0)
-                            collectionView.contentOffset = CGPoint(x: 0, y: -170)
-                        }
-                        return
-                    } else {
-                        NSLog("[ad] (\(position)) 10显示间隔 ")
-                    }
-                }
-            }
-            adView.nativeAd = nil
-            view.addSubview(adView)
-            adView.snp.remakeConstraints { make in
-                make.top.equalTo(view.snp.topMargin)
-                make.left.right.equalToSuperview().inset(16)
-                make.height.equalTo(0).priority(.high)
-            }
-            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
     }
 }
 

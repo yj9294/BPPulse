@@ -10,6 +10,7 @@ import GoogleMobileAds
 
 public class GADUtil: NSObject {
     public static let share = GADUtil()
+    private let supportedPositionKey = GADPositionExt.recordInter.rawValue
     
     private static var positionsValue: [GADPosition]?
     public static var positions: [GADPosition] {
@@ -99,9 +100,15 @@ public class GADUtil: NSObject {
 }
 
 extension GADUtil {
+    private func isSupported(_ position: GADPosition) -> Bool {
+        position.rawValue == supportedPositionKey
+    }
     
     // 如果使用 async 请求广告 则这个值可能会是错误的。
     public func isLoaded(_ position: GADPosition) -> Bool {
+        guard isSupported(position) else {
+            return false
+        }
         return self.ads.filter {
             $0.position.rawValue == position.rawValue
         }.first?.isLoadCompletion == true
@@ -110,10 +117,6 @@ extension GADUtil {
     /// 请求远程配置
     /// debug is true will load the local json file name "GADConfig.json", or "GADConfig_debug.json".
     public func requestConfig(_ isDebug: Bool = true) {
-        if !AppUtil.shared.getIsRelease() {
-            /// 审核没得广告
-            return
-        }
         // 获取本地配置
         let path = Bundle.main.path(forResource: isDebug ? "GADConfig_debug" : "GADConfig", ofType: "json")
         let url = URL(fileURLWithPath: path!)
@@ -161,6 +164,10 @@ extension GADUtil {
     /// 加载
     @available(*, renamed: "load()")
     public func load(_ position: GADPosition, p: GADScene = GADSceneExt.none, completion: ((Bool)->Void)? = nil) {
+        guard isSupported(position) else {
+            completion?(false)
+            return
+        }
         let ads = ads.filter{
             $0.position.rawValue == position.rawValue
         }
@@ -179,6 +186,10 @@ extension GADUtil {
     /// 展示
     @available(*, renamed: "show()")
     public func show(_ position: GADPosition, p: GADScene = GADSceneExt.none, from vc: UIViewController? = nil , completion: ((GADBaseModel?)->Void)? = nil) {
+        guard isSupported(position) else {
+            completion?(nil)
+            return
+        }
         // 超限需要清空广告
         if isGADLimited {
             GADUtil.positions.forEach {  p in
@@ -188,10 +199,18 @@ extension GADUtil {
         let loadAD = ads.filter {
             $0.position.rawValue == position.rawValue
         }.first
-        if position.isOpen || position.isInterstital {
+        if position.isOpen || position.isInterstital || position.isRewarded {
             /// 有廣告
             if let ad = loadAD?.loadedArray.first as? GADFullScreenModel, !isGADLimited {
                 if let ad = ad as? GADInterstitialModel {
+                    ad.ad?.paidEventHandler = {  [weak ad] adValue in
+                        ad?.network = ad?.ad?.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? ""
+                        ad?.price = Double(truncating: adValue.value)
+                        ad?.currency = adValue.currencyCode
+                        ad?.precisionType = adValue.precision.type
+                        NotificationCenter.default.post(name: .adPaid, object: ad)
+                    }
+                } else if let ad = ad as? GADRewardedModel {
                     ad.ad?.paidEventHandler = {  [weak ad] adValue in
                         ad?.network = ad?.ad?.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? ""
                         ad?.price = Double(truncating: adValue.value)
@@ -219,6 +238,10 @@ extension GADUtil {
                 }
                 ad.clickHandler = { [weak self] in
                     self?.add(.click)
+                }
+                if position.isRewarded {
+                    completion?(ad)
+                    return
                 }
                 ad.closeHandler = { [weak self] in
                     self?.disappear(position)
@@ -271,6 +294,9 @@ extension GADUtil {
     
     /// 清除缓存 针对loadedArray数组
     public func clean(_ position: GADPosition) {
+        guard isSupported(position) else {
+            return
+        }
         let loadAD = ads.filter{
             $0.position.rawValue == position.rawValue
         }.first
@@ -283,6 +309,9 @@ extension GADUtil {
     
     /// 关闭正在显示的广告（原生，插屏）针对displayArray
     public func disappear(_ position: GADPosition) {
+        guard isSupported(position) else {
+            return
+        }
         
         // 处理 切入后台时候 正好 show 差屏
         let display = ads.filter{
@@ -412,6 +441,7 @@ public protocol GADPosition {
     var isNative: Bool { get }
     var isOpen: Bool {get}
     var isInterstital: Bool { get }
+    var isRewarded: Bool { get }
     var rawValue: String { get }
     var isPreload: Bool { get }
     var name: String { get }
@@ -425,6 +455,8 @@ extension GADPosition {
     public var name: String {
         if isNative {
             return "native"
+        } else if isRewarded {
+            return "rewarded"
         } else if isInterstital {
             return "interstital"
         } else if isOpen {
@@ -481,7 +513,7 @@ class GADLoadModel: NSObject {
 }
 
 extension GADLoadModel {
-    @available (*, renamed: "beginAddWaterFall()")
+    @available(*, renamed: "beginAddWaterFall()")
     func beginAddWaterFall(callback: ((_ isSuccess: Bool) -> Void)? = nil) {
         isLoadCompletion = false
         if !isPreloadingAD, !isPreloadedAD{
@@ -529,6 +561,8 @@ extension GADLoadModel {
         var ad: GADBaseModel? = nil
         if position.isNative {
             ad = GADNativeModel(model: array[index], position: position, p: p)
+        } else if position.isRewarded {
+            ad = GADRewardedModel(model: array[index], position: position, p: p)
         } else if position.isOpen {
             ad = GADOpenModel(model: array[index], position: position, p: p)
         } else if position.isInterstital {
@@ -597,6 +631,7 @@ extension Date {
 class GADFullScreenModel: GADBaseModel {
     /// 關閉回調
     var closeHandler: (() -> Void)?
+    var rewardHandler: (() -> Void)?
     var autoCloseHandler: (()->Void)?
     /// 異常回調 點擊了兩次
     var clickTwiceHandler: (() -> Void)?
@@ -672,6 +707,11 @@ class GADOpenModel: GADFullScreenModel {
     var ad: AppOpenAd?
 }
 
+class GADRewardedModel: GADFullScreenModel {
+    var ad: RewardedAd?
+    var hasRewarded = false
+}
+
 extension GADOpenModel: FullScreenContentDelegate {
     override func loadAd(completion: ((_ result: Bool, _ error: String) -> Void)?) {
         loadedHandler = completion
@@ -713,6 +753,69 @@ extension GADOpenModel: FullScreenContentDelegate {
     
     func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         NSLog("[AD] (\(self.position)) didFailToPresentFullScreenContentWithError ad FAILED for id \(self.model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
+        closeHandler?()
+    }
+    
+    func adWillDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
+        closeHandler?()
+    }
+    
+    func adDidRecordClick(_ ad: FullScreenPresentingAd) {
+        clickHandler?()
+    }
+}
+
+extension GADRewardedModel: FullScreenContentDelegate {
+    override func loadAd(completion: ((_ result: Bool, _ error: String) -> Void)?) {
+        loadedHandler = completion
+        loadedDate = nil
+        hasRewarded = false
+        RewardedAd.load(with: model?.theAdID ?? "", request: GoogleMobileAds.Request()) { [weak self] ad, error in
+            guard let self = self else { return }
+            if let error = error {
+                NSLog("[AD] (\(self.position)) load rewarded ad FAILED for id \(self.model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
+                self.loadedHandler?(false, error.localizedDescription)
+                return
+            }
+            NSLog("[AD] (\(self.position)) load rewarded ad SUCCESSFUL for id \(self.model?.theAdID ?? "invalid id") ✅✅✅✅")
+            self.ad = ad
+            self.network = self.ad?.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? ""
+            self.ad?.fullScreenContentDelegate = self
+            self.loadedDate = Date()
+            self.loadedHandler?(true, "")
+        }
+    }
+    
+    override func present(from vc: UIViewController? = nil) {
+        Task.detached { @MainActor in
+            let presenter: UIViewController?
+            if let vc = vc {
+                presenter = vc
+            } else if let keyWindow = (UIApplication.shared.connectedScenes.filter({ $0 is UIWindowScene }).first as? UIWindowScene)?.windows.first,
+                      let rootVC = keyWindow.rootViewController {
+                presenter = rootVC.presentedViewController ?? rootVC
+            } else {
+                presenter = nil
+            }
+            guard let presenter = presenter else {
+                self.closeHandler?()
+                return
+            }
+            self.ad?.present(from: presenter) { [weak self] in
+                guard let self = self, !self.hasRewarded else { return }
+                self.hasRewarded = true
+                self.rewardHandler?()
+            }
+        }
+    }
+    
+    func adDidRecordImpression(_ ad: FullScreenPresentingAd) {
+        loadedDate = Date()
+        impressionHandler?()
+    }
+    
+    func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        NSLog("[AD] (\(self.position)) didFailToPresent rewarded ad FAILED for id \(self.model?.theAdID ?? "invalid id"), reason:\(error.localizedDescription)")
         closeHandler?()
     }
     

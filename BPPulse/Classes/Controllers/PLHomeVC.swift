@@ -55,14 +55,10 @@ class PLHomeVC: PLBaseVC {
         setupNavigationBar()
         
         refreshItem(segementView.item)
-        willAppear = true
-        GADUtil.share.load(GADPositionExt.homeNative)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        willAppear = false
-        GADUtil.share.disappear(GADPositionExt.homeNative)
     }
     
     func setupNavigationBar() {
@@ -271,12 +267,9 @@ class PLHomeVC: PLBaseVC {
     }
     
     func addAction() {
-        GADUtil.share.load(GADPositionExt.addInter)
-        GADUtil.share.show(GADPositionExt.addInter) { _ in
-            let vc = PLAddVC()
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc)
-        }
+        let vc = PLAddVC()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc)
     }
     
     func refreshItem(_ filter: PLHomeFilterModel) {
@@ -286,32 +279,5 @@ class PLHomeVC: PLBaseVC {
     }
     
     @objc func nativeADLoad(noti: Notification) {
-        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.homeNative.rawValue {
-            if let ad = noti.object as? GADNativeModel {
-                if willAppear {
-                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
-                        adView.nativeAd = ad.nativeAd
-                        impressDate = Date()
-                        if adView.superview != nil {
-                            adView.snp.remakeConstraints { make in
-                                make.top.equalTo(recentTitleLabel.snp.bottom).offset(16 * scale)
-                                make.left.right.equalToSuperview().inset(16)
-                                make.height.equalTo(170).priority(.high)
-                            }
-                        }
-                        return
-                    } else {
-                        NSLog("[ad] (\(position)) 10显示间隔 ")
-                    }
-                }
-            }
-            adView.nativeAd = nil
-            view.addSubview(adView)
-            adView.snp.remakeConstraints { make in
-                make.top.equalTo(recentTitleLabel.snp.bottom).offset(16 * scale)
-                make.left.right.equalToSuperview().inset(16)
-                make.height.equalTo(0).priority(.high)
-            }
-        }
     }
 }

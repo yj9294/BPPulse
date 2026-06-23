@@ -10,6 +10,9 @@ import MBProgressHUD
 import IQKeyboardManagerSwift
 
 class PLAddVC: PLBaseVC {
+    private let freeSaveLimit = 3
+    private static var freeSaveCount = 0
+    private var isAwaitingRewardedSave = false
 
     var item: PLPulseModel = .init() {
         didSet {
@@ -24,16 +27,12 @@ class PLAddVC: PLBaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    var timer: Timer?
-    
-    deinit {
-        timer?.invalidate()
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         IQKeyboardManager.shared.enableAutoToolbar = true
+        normalizeFreeSaveCount()
+        GADUtil.share.load(GADPositionExt.recordInter)
     }
     
     lazy var sysInputView = {
@@ -232,41 +231,85 @@ class PLAddVC: PLBaseVC {
     }
     
     func nextAction() {
-        CacheUtil.shared.cachePulse(self.item)
+        normalizeFreeSaveCount()
+        if Self.freeSaveCount > 0 {
+            consumeFreeSaveAndSave()
+            return
+        }
+        requestRewardedSave()
+    }
+    
+    private func normalizeFreeSaveCount() {
+        if Self.freeSaveCount < 0 || Self.freeSaveCount > freeSaveLimit {
+            Self.freeSaveCount = 0
+        }
+    }
+    
+    private func consumeFreeSaveAndSave() {
+        Self.freeSaveCount = max(0, Self.freeSaveCount - 1)
+        completeSave()
+    }
+    
+    private func requestRewardedSave() {
+        if isAwaitingRewardedSave {
+            return
+        }
+        isAwaitingRewardedSave = true
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "Loading..."
         GADUtil.share.load(GADPositionExt.recordInter)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+            self?.presentRewardedIfPossible(hud: hud)
+        }
+    }
+    
+    private func presentRewardedIfPossible(hud: MBProgressHUD) {
+        guard isAwaitingRewardedSave else { return }
+        guard GADUtil.share.isLoaded(GADPositionExt.recordInter) else {
+            hud.hide(animated: true)
+            isAwaitingRewardedSave = false
+            AEAlertControl.error(title: "Rewarded ad is not ready yet.")
+            GADUtil.share.load(GADPositionExt.recordInter)
+            return
+        }
         
-        let maxDuration = 10.0
-        var progres = 0.0
-        if self.timer != nil {
-            self.timer?.invalidate()
-            self.timer = nil
-        }
-        var showAD = false
-        self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
-            guard let self = self else {
-                timer.invalidate()
+        GADUtil.share.show(GADPositionExt.recordInter) { [weak self] ad in
+            guard let self = self else { return }
+            guard let rewardedAd = ad as? GADRewardedModel else {
                 hud.hide(animated: true)
+                self.isAwaitingRewardedSave = false
+                AEAlertControl.error(title: "Rewarded ad is not ready yet.")
+                GADUtil.share.load(GADPositionExt.recordInter)
                 return
             }
-            progres += 0.1
-            if progres > maxDuration {
-                hud.hide(animated: true)
-                goResultVC()
-                timer.invalidate()
-                return
+            
+            rewardedAd.rewardHandler = { [weak self] in
+                guard let self = self else { return }
+                Self.freeSaveCount = self.freeSaveLimit
             }
-            if GADUtil.share.isLoaded(GADPositionExt.recordInter), !showAD {
+            
+            rewardedAd.closeHandler = { [weak self] in
+                guard let self = self else { return }
+                let earnedReward = rewardedAd.hasRewarded
                 hud.hide(animated: true)
-                showAD = true
-                GADUtil.share.show(GADPositionExt.recordInter) { _ in
-                    self.goResultVC()
-                    timer.invalidate()
+                self.isAwaitingRewardedSave = false
+                GADUtil.share.disappear(GADPositionExt.recordInter)
+                GADUtil.share.load(GADPositionExt.recordInter)
+                if earnedReward {
+                    self.consumeFreeSaveAndSave()
+                } else {
+                    AEAlertControl.error(title: "Watch the full rewarded ad to save.")
                 }
-                return
             }
+            
+            NotificationCenter.default.post(name: .adPresent, object: rewardedAd)
+            rewardedAd.present(from: self)
         }
+    }
+    
+    private func completeSave() {
+        CacheUtil.shared.cachePulse(self.item)
+        goResultVC()
     }
     
     func goResultVC() {

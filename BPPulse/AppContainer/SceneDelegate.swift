@@ -12,13 +12,8 @@ import AppTrackingTransparency
 import Network
 import FacebookCore
 import GoogleMobileAds
-import AppLovinSDK
-import PAGAdSDK
-import PangleAdapter
-import MTGSDK
 import FBAEMKit
 import FirebaseAnalytics
-import FBAudienceNetwork
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -42,30 +37,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let _ = (scene as? UIWindowScene) else { return }
         Settings.shared.isAdvertiserIDCollectionEnabled = true
-        
-        // applovin
-        ALPrivacySettings.setHasUserConsent(true)
-        ALPrivacySettings.setDoNotSell(true)
 
-        // pangle
-        GADMediationAdapterPangle.setGDPRConsent(PAGGDPRConsentType.consent.rawValue)
-        
-        /// MTG
-        MTGSDK.sharedInstance().consentStatus = true
-        MTGSDK.sharedInstance().doNotTrackStatus = false
-        
-        // Set the flag as true
-        FBAdSettings.setAdvertiserTrackingEnabled(true)
-
-        
         AppEvents.shared.activateApp()
         
         MobileAds.shared.requestConfiguration.testDeviceIdentifiers = [ "d547a03032c9508d3f926616d93cfa5b", "bda4937be36282e4dcfd7f6bcfefbdb8" ]
         GADUtil.initializePositions(GADPositionExt.allCases)
-        requestConfig()
-        if AppUtil.shared.getIsRelease() {
-            self.requestGADConfig()
-        }
+        self.requestGADConfig()
         checkNetwork()
         Analytics.logEvent("myFirstOpen", parameters: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(paidCallback(noti:)), name: .adPaid, object: nil)
@@ -125,10 +102,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         monitor.pathUpdateHandler = { path in
             DispatchQueue.main.async {
                 if path.status == .satisfied, !CacheUtil.shared.getNetworkEnable() {
-                    if AppUtil.shared.getIsRelease() {
-                        self.requestGADConfig()
-                    }
-                    self.requestConfig()
+                    self.requestGADConfig()
                     self.requestTrackingAuthorization()
                 } else {
                     debugPrint("网络已断开")
@@ -141,31 +115,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func requestGADConfig() {
-        GADUtil.share.requestConfig(false)
-        GADPositionExt.allCases.forEach({
-            GADUtil.share.load($0)
-        })
-    }
-    
-    func requestConfig() {
-        Request<ConfigModel>.getConfigs { ret in
-            if ret.bundleID == "com.bp.pulse" {
-                if let config = ret.configs?.first(where: {$0.configKey == "isRelease"}) {
-                    if config.configValue == "true" {
-                        AppUtil.shared.setIsRelease(isRelease: true)
-                    } else {
-                        AppUtil.shared.setIsRelease(isRelease: false)
-                    }
-                    if AppUtil.shared.getIsRelease() {
-                        self.requestGADConfig()
-                    }
-                }
-            }
-        } err: { obj, code in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                self.requestConfig()
-            }
-        }
+        #if DEBUG
+        let useDebugConfig = true
+        #else
+        let useDebugConfig = false
+        #endif
+        GADUtil.share.requestConfig(useDebugConfig)
+        GADUtil.share.load(GADPositionExt.recordInter)
     }
     
     func requestTrackingAuthorization() {

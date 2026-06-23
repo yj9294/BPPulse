@@ -10,7 +10,6 @@
 		840344132EA62EC20085AB9F /* FacebookAEM in Frameworks */ = {isa = PBXBuildFile; productRef = 840344122EA62EC20085AB9F /* FacebookAEM */; };
 		840344152EA62EC20085AB9F /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 840344142EA62EC20085AB9F /* FacebookBasics */; };
 		840344172EA62EC20085AB9F /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 840344162EA62EC20085AB9F /* FacebookCore */; };
-		846DEB182EAF165A00E91B62 /* AppLovinAdapterTarget in Frameworks */ = {isa = PBXBuildFile; productRef = 846DEB172EAF165A00E91B62 /* AppLovinAdapterTarget */; };
 		847C731A2E992045008E7A69 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 847C73192E992045008E7A69 /* GoogleMobileAds */; };
 		847C732C2E992915008E7A69 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732B2E992915008E7A69 /* FirebaseAnalytics */; };
 		847C732E2E992915008E7A69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 847C732D2E992915008E7A69 /* FirebaseCore */; };
@@ -70,7 +69,6 @@
 				847C73322E992915008E7A69 /* FirebasePerformance in Frameworks */,
 				847C732C2E992915008E7A69 /* FirebaseAnalytics in Frameworks */,
 				848ACB2E2E7952ED000AA023 /* IQKeyboardManagerSwift in Frameworks */,
-				846DEB182EAF165A00E91B62 /* AppLovinAdapterTarget in Frameworks */,
 				8A7819998A2CE1602233173D /* Pods_BPPulse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,7 +122,6 @@
 				848ACAFB2E794F56000AA023 /* Sources */,
 				848ACAFC2E794F56000AA023 /* Frameworks */,
 				848ACAFD2E794F56000AA023 /* Resources */,
-				7F1CEE0A2E876A8AD7D82957 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,7 +145,6 @@
 				840344122EA62EC20085AB9F /* FacebookAEM */,
 				840344142EA62EC20085AB9F /* FacebookBasics */,
 				840344162EA62EC20085AB9F /* FacebookCore */,
-				846DEB172EAF165A00E91B62 /* AppLovinAdapterTarget */,
 			);
 			productName = BPPulse;
 			productReference = 848ACAFF2E794F56000AA023 /* BPPulse.app */;
@@ -187,7 +183,6 @@
 				847C73332E9934DA008E7A69 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
 				847C73C42E9A1CD7008E7A69 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
-				846DEB162EAF165A00E91B62 /* XCRemoteSwiftPackageReference "googleads-mobile-ios-mediation-applovin" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 848ACB002E794F56000AA023 /* Products */;
@@ -210,23 +205,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7F1CEE0A2E876A8AD7D82957 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BPPulse/Pods-BPPulse-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BPPulse/Pods-BPPulse-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BPPulse/Pods-BPPulse-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		945975E9FD431A392314CBD0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -485,14 +463,6 @@
 				kind = branch;
 			};
 		};
-		846DEB162EAF165A00E91B62 /* XCRemoteSwiftPackageReference "googleads-mobile-ios-mediation-applovin" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/googleads-mobile-ios-mediation-applovin.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		847C73182E992045008E7A69 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
@@ -566,11 +536,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 840344112EA62EC20085AB9F /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookCore;
-		};
-		846DEB172EAF165A00E91B62 /* AppLovinAdapterTarget */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 846DEB162EAF165A00E91B62 /* XCRemoteSwiftPackageReference "googleads-mobile-ios-mediation-applovin" */;
-			productName = AppLovinAdapterTarget;
 		};
 		847C73192E992045008E7A69 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,10 +6,6 @@ target 'BPPulse' do
   use_frameworks!
 
   # Pods for BPPulse
-pod 'GoogleMobileAdsMediationPangle'
-pod 'GoogleMobileAdsMediationMintegral'
-pod 'GoogleMobileAdsMediationFacebook'
-
 end
 
 post_install do |installer|

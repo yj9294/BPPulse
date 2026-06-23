@@ -32,20 +32,14 @@ class PLResultVC: PLBaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        willAppear = true
-        GADUtil.share.load(GADPositionExt.resultNative)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        willAppear = false
-        GADUtil.share.disappear(GADPositionExt.resultNative)
     }
 
     override func back() {
         navigationController?.popToRootViewController(animated: true)
-        GADUtil.share.load(GADPositionExt.backInter)
-        GADUtil.share.show(GADPositionExt.backInter)
     }
     
     lazy var cardView = {
@@ -227,34 +221,7 @@ class PLResultHealthCell: PLBaseCollectionCell {
 
 extension PLResultVC {
     @objc func nativeADLoad(noti: Notification) {
-        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.resultNative.rawValue {
-            if let ad = noti.object as? GADNativeModel {
-                if willAppear {
-                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
-                        adView.nativeAd = ad.nativeAd
-                        impressDate = Date()
-                        if adView.superview != nil {
-                            adView.snp.remakeConstraints { make in
-                                make.top.equalTo(healthCollectionView.snp.bottom).offset(16 * scale)
-                                make.left.right.equalToSuperview().inset(16)
-                                make.height.equalTo(180).priority(.high)
-                            }
-                            view.layoutIfNeeded()
-                        }
-                        return
-                    } else {
-                        NSLog("[ad] (\(position)) 10显示间隔 ")
-                    }
-                }
-            }
-            adView.nativeAd = nil
-            view.addSubview(adView)
-            adView.snp.remakeConstraints { make in
-                make.top.equalTo(healthCollectionView.snp.bottom).offset(16 * scale)
-                make.left.right.equalToSuperview().inset(16)
-                make.height.equalTo(0).priority(.high)
-            }
-        }
+        
     }
 }
 

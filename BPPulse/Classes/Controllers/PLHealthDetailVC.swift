@@ -34,14 +34,10 @@ class PLHealthDetailVC: PLBaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        willAppear = true
-        GADUtil.share.load(GADPositionExt.infoNative)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        willAppear = false
-        GADUtil.share.disappear(GADPositionExt.infoNative)
     }
 
     private func setupUI(with item: PLHealthModel) {
@@ -231,32 +227,6 @@ class PLHealthDetailVC: PLBaseVC {
     }
     
     @objc func nativeADLoad(noti: Notification) {
-        if let position = noti.userInfo?["position"] as? GADPosition, position.rawValue == GADPositionExt.infoNative.rawValue {
-            if let ad = noti.object as? GADNativeModel {
-                if willAppear {
-                    if  Date().timeIntervalSince1970 - impressDate.timeIntervalSince1970 > 10 {
-                        adView.nativeAd = ad.nativeAd
-                        impressDate = Date()
-                        if adView.superview != nil {
-                            adView.snp.remakeConstraints { make in
-                                make.top.equalToSuperview().offset(16)
-                                make.left.right.equalToSuperview().inset(16)
-                                make.height.equalTo(108).priority(.high)
-                            }
-                        }
-                        return
-                    } else {
-                        NSLog("[ad] (\(position)) 10显示间隔 ")
-                    }
-                }
-            }
-            adView.nativeAd = nil
-            view.addSubview(adView)
-            adView.snp.remakeConstraints { make in
-                make.top.equalToSuperview().offset(16)
-                make.left.right.equalToSuperview().inset(16)
-                make.height.equalTo(0).priority(.high)
-            }
-        }
+        
     }
 }
