@@ -257,29 +257,15 @@ class PLAddVC: PLBaseVC {
         isAwaitingRewardedSave = true
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "Loading..."
-        GADUtil.share.load(GADPositionExt.recordInter)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
-            self?.presentRewardedIfPossible(hud: hud)
-        }
+        presentRewardedIfPossible(hud: hud)
     }
     
     private func presentRewardedIfPossible(hud: MBProgressHUD) {
         guard isAwaitingRewardedSave else { return }
-        guard GADUtil.share.isLoaded(GADPositionExt.recordInter) else {
-            hud.hide(animated: true)
-            isAwaitingRewardedSave = false
-            AEAlertControl.error(title: "Rewarded ad is not ready yet.")
-            GADUtil.share.load(GADPositionExt.recordInter)
-            return
-        }
-        
-        GADUtil.share.show(GADPositionExt.recordInter) { [weak self] ad in
+        GADUtil.share.show(GADPositionExt.recordInter, from: self) { [weak self] ad in
             guard let self = self else { return }
             guard let rewardedAd = ad as? GADRewardedModel else {
-                hud.hide(animated: true)
-                self.isAwaitingRewardedSave = false
-                AEAlertControl.error(title: "Rewarded ad is not ready yet.")
-                GADUtil.share.load(GADPositionExt.recordInter)
+                self.handleRewardedLoadFailure(hud: hud)
                 return
             }
             
@@ -291,7 +277,6 @@ class PLAddVC: PLBaseVC {
             rewardedAd.closeHandler = { [weak self] in
                 guard let self = self else { return }
                 let earnedReward = rewardedAd.hasRewarded
-                hud.hide(animated: true)
                 self.isAwaitingRewardedSave = false
                 GADUtil.share.disappear(GADPositionExt.recordInter)
                 GADUtil.share.load(GADPositionExt.recordInter)
@@ -302,9 +287,17 @@ class PLAddVC: PLBaseVC {
                 }
             }
             
+            hud.hide(animated: true)
             NotificationCenter.default.post(name: .adPresent, object: rewardedAd)
             rewardedAd.present(from: self)
         }
+    }
+    
+    private func handleRewardedLoadFailure(hud: MBProgressHUD) {
+        hud.hide(animated: true)
+        isAwaitingRewardedSave = false
+        AEAlertControl.error(title: "Rewarded ad failed to load.")
+        GADUtil.share.load(GADPositionExt.recordInter)
     }
     
     private func completeSave() {

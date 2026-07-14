@@ -174,6 +174,8 @@ class PLHomeVC: PLBaseVC {
             default:
                 DispatchQueue.main.async {
                     self.navigationItem.rightBarButtonItem?.tintColor = .text_4
+                    guard !CacheUtil.shared.getHasShownNotificationPrompt() else { return }
+                    CacheUtil.shared.updateHasShownNotificationPrompt(true)
                     let cancel = AEAction(title: "NO") {
                     }
                     let login = AEAction(buttonColor: .primary_1, title: "YES") {

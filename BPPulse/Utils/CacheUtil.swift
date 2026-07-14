@@ -59,9 +59,19 @@ class CacheUtil: NSObject {
     func updateNetworkEnable(_ enable: Bool) {
         isNetworkEnable = enable
     }
+    
+    @CodableUserDefaults(key: .notificationPromptShownKey, defaultValue: false)
+    private var hasShownNotificationPrompt: Bool
+    func getHasShownNotificationPrompt() -> Bool {
+        hasShownNotificationPrompt
+    }
+    func updateHasShownNotificationPrompt(_ shown: Bool) {
+        hasShownNotificationPrompt = shown
+    }
 }
 
 
 extension String {
     static let cachePulseListKey = "com.pulse.list"
+    static let notificationPromptShownKey = "com.notification.prompt.shown"
 }

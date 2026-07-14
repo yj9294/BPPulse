@@ -195,6 +195,8 @@ extension GADUtil {
             GADUtil.positions.forEach {  p in
                 self.clean(p)
             }
+            completion?(nil)
+            return
         }
         let loadAD = ads.filter {
             $0.position.rawValue == position.rawValue
@@ -250,7 +252,19 @@ extension GADUtil {
                 NotificationCenter.default.post(name: .adPresent, object: ad)
                 ad.present(from: vc)
             } else {
-                completion?(nil)
+                self.load(position, p: p) { [weak self] isSuccess in
+                    guard let self = self else {
+                        completion?(nil)
+                        return
+                    }
+                    guard isSuccess else {
+                        completion?(nil)
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.show(position, p: p, from: vc, completion: completion)
+                    }
+                }
             }
         } else if position.isNative {
             if let ad = loadAD?.loadedArray.first as? GADNativeModel, !isGADLimited {
@@ -490,6 +504,8 @@ class GADLoadModel: NSObject {
     }
     // 是否加载完成 不管成功还是失败
     var isLoadCompletion: Bool = false
+    /// 等待当前广告位加载结果的回调
+    private var pendingCallbacks: [((Bool) -> Void)] = []
     /// 正在加載術組
     var loadingArray: [GADBaseModel] = []
     /// 加載完成
@@ -516,21 +532,23 @@ extension GADLoadModel {
     @available(*, renamed: "beginAddWaterFall()")
     func beginAddWaterFall(callback: ((_ isSuccess: Bool) -> Void)? = nil) {
         isLoadCompletion = false
+        if let callback = callback {
+            pendingCallbacks.append(callback)
+        }
         if !isPreloadingAD, !isPreloadedAD{
             NSLog("[AD] (\(position.rawValue) start to prepareLoad.--------------------")
             if let array: [GADModel] = GADUtil.share.config?.arrayWith(position), array.count > 0 {
                 NSLog("[AD] (\(position.rawValue)) start to load array = \(array.count)")
                 prepareLoadAd(array: array) { [weak self] isSuccess in
-                    self?.isLoadCompletion = true
-                    callback?(isSuccess)
+                    self?.finishLoad(isSuccess)
                 }
             } else {
                 NSLog("[AD] (\(position.rawValue)) no configer.")
+                finishLoad(false)
             }
         } else if isPreloadedAD {
-            isLoadCompletion = true
-            callback?(true)
             NSLog("[AD] (\(position.rawValue)) loaded ad.")
+            finishLoad(true)
         } else if isPreloadingAD {
             NSLog("[AD] (\(position.rawValue)) loading ad.")
         }
@@ -539,6 +557,7 @@ extension GADLoadModel {
     func prepareLoadAd(array: [GADModel], at index: Int = 0, callback: ((_ isSuccess: Bool) -> Void)?) {
         if  index >= array.count {
             NSLog("[AD] (\(position.rawValue)) prepare Load Ad Failed, no more avaliable config.")
+            callback?(false)
             return
         }
         NSLog("[AD] (\(position)) prepareLoaded.")
@@ -583,10 +602,10 @@ extension GADLoadModel {
             
             /// 成功
             if isSuccess {
+                self.loadedArray.append(ad)
+                callback?(true)
                 RequestIP().requestIP(.load) { ip in
                     ad.loadIP = ip
-                    self.loadedArray.append(ad)
-                    callback?(true)
                 }
                 return
             }
@@ -610,6 +629,13 @@ extension GADLoadModel {
         self.displayArray = []
         self.loadedArray = []
         self.loadingArray = []
+    }
+    
+    private func finishLoad(_ isSuccess: Bool) {
+        isLoadCompletion = true
+        let callbacks = pendingCallbacks
+        pendingCallbacks.removeAll()
+        callbacks.forEach { $0(isSuccess) }
     }
 }
 
